@@ -1,0 +1,4 @@
+---
+import Layout from '../../layouts/Layout.astro';import PageHero from '../../components/PageHero.astro';import RoleCard from '../../components/RoleCard.astro';import CTASection from '../../components/CTASection.astro';import {roles} from '../../data/roles';
+---
+<Layout title="Roles you can hire offshore" description="Explore dedicated offshore roles in administration, customer service, finance, marketing, technology and operations for your NZ or Australian business." crumbs={[{name:'Roles',url:'/roles/'}]}><PageHero title="Find the capacity you’re missing." intro="From everyday administration to specialist support, start with the work you need done. We recruit a dedicated person around your requirements."/><section class="wrap section compact-top"><h2>Explore roles for your team.</h2><div class="role-grid">{roles.map((role,index)=><RoleCard role={role} index={index}/>)}</div></section><CTASection/></Layout>

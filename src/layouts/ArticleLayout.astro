@@ -1,0 +1,6 @@
+---
+import Layout from './Layout.astro';
+interface Props {frontmatter:{title:string;description:string;published:string};}
+const {frontmatter:f}=Astro.props;
+---
+<Layout title={f.title} description={f.description} crumbs={[{name:'Learn',url:'/resources/'},{name:f.title,url:Astro.url.pathname}]}><article class="wrap section prose"><h1>{f.title}</h1><p class="article-date"><time datetime={f.published}>{f.published}</time></p><slot/></article></Layout>

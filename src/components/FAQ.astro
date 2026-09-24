@@ -1,0 +1,4 @@
+---
+import {faqs} from '../data/site';
+---
+<section id="faqs" class="section wrap narrow"><h2>Before you build your team.</h2><div class="faqs">{faqs.map(([q,a])=><details><summary>{q}<span aria-hidden="true">+</span></summary><p>{a}</p></details>)}</div></section>

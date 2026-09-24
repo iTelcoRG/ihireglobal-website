@@ -1,0 +1,3 @@
+# Resource articles
+
+The visible section is Learn, at `/resources/`. `src/components/LearnHub.astro` groups useful existing pages by getting started, finding people, planning setup and working as one team. It includes short introductory explanations and clearly marks future in-depth guides. Add reviewed `.md` articles in `src/pages/resources/` using `src/layouts/ArticleLayout.astro`. Frontmatter requires title, description and a published date. Link each article from the relevant Learn topic when publishing. Do not invent author credentials or claim unverified facts. Do not add eyebrow labels above headings.

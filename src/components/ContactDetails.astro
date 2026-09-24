@@ -1,0 +1,8 @@
+---
+import { business } from '../data/business';
+const { contact } = business;
+const available = contact.email || contact.phone || contact.address || contact.availability;
+---
+<div class="notice">
+  {available ? <><h2>Contact iHire Global.</h2>{contact.email && <p><a href={`mailto:${contact.email}`}>{contact.email}</a></p>}{contact.phone && <p>{contact.phoneHref ? <a href={contact.phoneHref}>{contact.phone}</a> : contact.phone}</p>}{contact.address && <p>{contact.address}</p>}{contact.availability && <p>{contact.availability}</p>}</> : <><strong>Contact details to be confirmed</strong><p>Verified business email, telephone and contact availability will be added before launch. The form below currently prepares a local brief only.</p></>}
+</div>

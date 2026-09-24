@@ -1,0 +1,61 @@
+﻿---
+import { business, equipmentOptions, startTimeframes, talentPreferences } from '../data/business';
+---
+<section id="enquiry" class="section form-section">
+  <div class="wrap form-layout">
+    <div><h2>Tell us who<br/>you need.</h2><p>Prepare the role details for an indicative quote conversation. Include what you know; where you need guidance, tell us.</p><aside class="notice" id="enquiry-behaviour"><strong>Prepare a brief on your device</strong><p>Online enquiries are not connected yet. This form downloads a text file for you to keep. Nothing is sent to iHire, and no quote is generated.</p><p>Your entries are not saved on this website. Keep the downloaded file if you want to return to your brief later.</p></aside></div>
+    <form id="talent-form" aria-describedby="enquiry-behaviour" data-mode={business.enquiry.mode}>
+      <fieldset><legend>Contact information</legend><div class="form-grid">
+        <label for="contact-name">Name <span>(required)</span><input id="contact-name" name="contact_name" autocomplete="name" required maxlength="120"/></label>
+        <label for="company-name">Company <span>(required)</span><input id="company-name" name="company_name" autocomplete="organization" required maxlength="160"/></label>
+        <label for="work-email">Work email <span>(required)</span><input id="work-email" name="work_email" type="email" autocomplete="email" required maxlength="200"/></label>
+        <label for="phone">Phone <span>(optional)</span><input id="phone" name="phone" type="tel" autocomplete="tel" maxlength="40"/></label>
+        <label class="full" for="country">Country <span>(required)</span><select id="country" name="country" required><option value="">Select your country</option><option value="NZ">New Zealand</option><option value="AU">Australia</option><option value="OTHER">Other</option></select></label>
+      </div></fieldset>
+      <fieldset><legend>Staffing requirement</legend><div class="form-grid">
+        <label class="full" for="role-title">Role / job title <span>(required)</span><input id="role-title" name="role_title" required maxlength="160" placeholder="e.g. Customer service coordinator"/></label>
+        <label for="headcount">Number of people required <span>(required)</span><input id="headcount" name="headcount" type="number" min="1" max="1000" step="1" value="1" required/></label>
+        <label for="start-timeframe">Desired start timeframe<select id="start-timeframe" name="start_timeframe">{startTimeframes.map(([value,label]) => <option value={value}>{label}</option>)}</select></label>
+        <label class="full" for="responsibilities">Main responsibilities <span>(required)</span><textarea id="responsibilities" name="responsibilities" rows="4" required maxlength="5000" placeholder="What will this person do in a typical week?"></textarea></label>
+        <label class="full" for="required-skills">Required skills <span>(required)</span><textarea id="required-skills" name="required_skills" rows="3" required maxlength="3000" placeholder="Tools, systems, communication or technical skills…"></textarea></label>
+        <label class="full" for="required-experience">Required experience <span>(optional)</span><textarea id="required-experience" name="required_experience" rows="3" maxlength="3000" placeholder="Relevant work, seniority or qualifications. Tell us if you need a recommendation."></textarea></label>
+        <label class="full" for="working-hours">Preferred working hours <span>(optional)</span><input id="working-hours" name="working_hours" maxlength="300" aria-describedby="hours-help" placeholder="e.g. Monday–Friday, 9am–5pm Auckland time"/><span class="field-help" id="hours-help">Include the days and your time zone, or say if the hours are still to be decided.</span></label>
+      </div></fieldset>
+      <fieldset><legend>Talent location</legend><label for="preferred-location">Preferred talent location<select id="preferred-location" name="preferred_location" aria-describedby="location-help">{talentPreferences.map(([value,label]) => <option value={value} selected={value==='recommendation'}>{label}</option>)}</select></label><p class="field-help" id="location-help">Sri Lanka is our established primary operation. Other countries are additional sourcing options. Availability and support depend on the role and must be confirmed.</p></fieldset>
+      <fieldset class="equipment-fields" aria-describedby="equipment-help"><legend>Equipment / infrastructure</legend><p class="field-help" id="equipment-help">Select any requirements you know about. These preferences help scope a quote; they are not automatic inclusions. You can select “Unsure” alongside items you already know you need.</p><div class="equipment-options">{equipmentOptions.map(([value,label]) => <label class="checkbox-option" for={`equipment-${value}`}><input type="checkbox" id={`equipment-${value}`} name="equipment_requirements" value={value}/><span>{label}</span></label>)}</div></fieldset>
+      <fieldset><legend>Anything else we should know?</legend><label for="notes">Additional information <span>(optional)</span><textarea id="notes" name="notes" rows="4" maxlength="5000" placeholder="Specialist hardware, connectivity, team setup or other requirements…"></textarea></label></fieldset>
+      <button class="button" type="submit" disabled id="download-brief">Download my staffing brief <span aria-hidden="true">↓</span></button>
+      <p class="fine-print">Downloads a text file on your device. It does not send an enquiry, request a quote or commit you to a hire.</p>
+      <p id="form-status" role="status" aria-live="polite"></p>
+      <p id="brief-script-note">Enable JavaScript to download your brief. Online submission is not available.</p>
+    </form>
+  </div>
+</section>
+<script>
+  import { createEnquiryDraft, formatEnquiryBrief } from '../lib/enquiry';
+  const form = document.querySelector<HTMLFormElement>('#talent-form');
+  const button = document.querySelector<HTMLButtonElement>('#download-brief');
+  if (form && button) {
+    button.disabled = false;
+    const scriptNote = document.querySelector<HTMLElement>('#brief-script-note');
+    if (scriptNote) scriptNote.hidden = true;
+    const requiredText = form.querySelectorAll<HTMLInputElement | HTMLTextAreaElement>('input[required]:not([type="number"]), textarea[required]');
+    const validateText = (field: HTMLInputElement | HTMLTextAreaElement) => field.setCustomValidity(field.value.length > 0 && !field.value.trim() ? 'Please enter a value, not just spaces.' : '');
+    requiredText.forEach(field => field.addEventListener('input', () => validateText(field)));
+    form.addEventListener('input', () => { const status = document.querySelector('#form-status'); if (status) status.textContent = ''; });
+    form.addEventListener('submit', event => {
+      event.preventDefault();
+      requiredText.forEach(validateText);
+      if (!form.reportValidity()) return;
+      const draft = createEnquiryDraft(new FormData(form));
+      const url = URL.createObjectURL(new Blob([formatEnquiryBrief(draft)], { type: 'text/plain;charset=utf-8' }));
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = 'ihire-staffing-brief.txt';
+      link.click();
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+      const status = document.querySelector('#form-status');
+      if (status) status.textContent = 'Your staffing brief is ready to save on your device. It has not been sent to iHire Global. No quote has been requested.';
+    });
+  }
+</script>

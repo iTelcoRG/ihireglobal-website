@@ -1,0 +1,7 @@
+---
+import DiscoveryLayout from '../../layouts/DiscoveryLayout.astro';
+import { needs } from '../../data/discovery';
+export function getStaticPaths() { return needs.map(entry => ({ params: { slug: entry.slug }, props: { entry } })); }
+const { entry } = Astro.props;
+---
+<DiscoveryLayout entry={entry} kind="business-needs"/>

@@ -1,0 +1,6 @@
+---
+import type {locations} from '../data/site';
+interface Props {location:(typeof locations)[number];}
+const {location}=Astro.props;
+---
+<a class:list={['location-card',{'established':location.slug==='sri-lanka'}]} href={`/talent-locations/${location.slug}/`}><h3>{location.name} <span aria-hidden="true">↗</span></h3><p>{location.slug==='sri-lanka'?'Our primary staffing operation.':'Available through our recruitment network, depending on your role.'}</p></a>

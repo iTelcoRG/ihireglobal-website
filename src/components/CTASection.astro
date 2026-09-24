@@ -1,0 +1,6 @@
+﻿---
+import { ctas } from '../data/business';
+interface Props { mode?: 'general' | 'pricing'; }
+const { mode = 'general' } = Astro.props;
+---
+<section class="cta-section"><div class="wrap cta-inner"><div><h2>Tell us who you’re looking for.</h2><p>{mode === 'pricing' ? 'Tell us the role, experience and skills you need and we’ll scope the likely staffing requirement with you.' : 'Tell us the role, experience and skills you need. We’ll handle the recruitment process from there.'}</p></div><a class="button light" href="/hire-talent/#enquiry">{ctas[mode]} <span aria-hidden="true">↗</span></a></div></section>

@@ -1,0 +1,25 @@
+/* Build 3 additions only. Preserve the approved Build 2 design system. */
+.field-help, label > .field-help { display: block; font-size: .78rem; line-height: 1.65; color: var(--muted-text); margin: 10px 0 0; }
+.equipment-fields > .field-help { margin: -8px 0 20px; }
+.equipment-options { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.checkbox-option { display: flex; align-items: flex-start; gap: 12px; min-height: 48px; padding: 12px; border: 1px solid var(--border); background: var(--background); cursor: pointer; }
+.checkbox-option input { width: 18px; height: 18px; min-height: 18px; flex: 0 0 18px; margin: 1px 0 0; padding: 0; accent-color: var(--primary); }
+.checkbox-option > span { color: var(--text); font-size: .82rem; }
+.checkbox-option:has(input:checked) { border-color: var(--primary); background: var(--accent-soft); }
+.quote-process h3 { font-size: 1.25rem; margin: 0; }
+.estimator-note { padding: 28px 0 0; border-top: 1px solid var(--border); align-self: start; }
+.estimator-note h3 { font-size: 1.15rem; }
+.estimator-note p { font-size: .88rem; }
+.use-case { display: grid; grid-template-columns: 1.1fr 1fr; gap: 85px; }
+.case-workflow { border-top: 4px solid var(--accent); padding-top: 28px; }
+.case-workflow h3 { font-size: 1.5rem; }
+.case-workflow li { padding: 10px 0; }
+.case-workflow p { font-size: .88rem; margin-top: 25px; }
+.experience-band .case-workflow { color: var(--background); }
+@media (max-width: 900px) { .use-case { gap: 40px; } }
+@media (max-width: 767px) {
+  .equipment-options, .use-case { grid-template-columns: 1fr; }
+  .use-case { gap: 30px; }
+  .quote-process h3 { font-size: 1.2rem; }
+  .cta-inner .button { max-width: 100%; gap: 18px; }
+}

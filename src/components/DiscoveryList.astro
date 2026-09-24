@@ -1,0 +1,12 @@
+---
+import type { DiscoveryPage } from '../data/discovery';
+interface Props { items: DiscoveryPage[]; base: 'industries' | 'business-needs'; }
+const { items, base } = Astro.props;
+---
+<div class:list={['discovery-list', base === 'industries' ? 'industry-list' : 'needs-list']}>
+  {items.map((item) => <a href={`/${base}/${item.slug}/`}>
+    <h3>{item.name}</h3>
+    <p>{item.heading}</p>
+    <span class="discovery-arrow" aria-hidden="true">↗</span>
+  </a>)}
+</div>

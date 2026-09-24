@@ -1,0 +1,42 @@
+---
+import Layout from './Layout.astro';
+import PageHero from '../components/PageHero.astro';
+import CTASection from '../components/CTASection.astro';
+import { industries, needs, type DiscoveryPage } from '../data/discovery';
+import { roles } from '../data/roles';
+interface Props { entry: DiscoveryPage; kind: 'industries' | 'business-needs'; }
+const { entry, kind } = Astro.props;
+const industry = kind === 'industries';
+const caseLinks: Record<string,string> = {'ecommerce':'ecommerce-administration','telecommunications':'sales-verification','security-monitoring':'after-hours-monitoring','technology':'internal-team'};
+const caseId = industry ? caseLinks[entry.slug] : undefined;
+const parent = industry ? 'Industries' : 'Business Needs';
+const related = (industry ? needs : industries).filter(item => entry.related.includes(item.slug));
+---
+<Layout title={entry.title} description={entry.description} crumbs={[{name: parent, url: `/${kind}/`}, {name: entry.name, url: `/${kind}/${entry.slug}/`}]}>
+  <PageHero title={entry.heading} intro={entry.intro}>
+    <a class="button" href="/hire-talent/#enquiry">Find Talent <span aria-hidden="true">↗</span></a>
+  </PageHero>
+  <section class="section wrap compact-top detail-grid">
+    <div>
+      <h2>{industry ? 'Where a dedicated person can help.' : 'Start with the work, then define the role.'}</h2>
+      <p>{entry.context}</p>
+      <ul class="check-list">{entry.work.map(item => <li>{item}</li>)}</ul>
+      <h2>{industry ? 'Plan the practical details.' : 'Make it work in your business.'}</h2>
+      <p>{entry.planning}</p>{caseId && <a class="text-link" href={`/use-cases/#${caseId}`}>Explore a real operating example <span aria-hidden="true">→</span></a>}
+    </div>
+    <aside class="scope-panel">
+      <h2>{industry ? 'A clear scope from the start.' : 'What to keep in mind.'}</h2>
+      <p>{entry.scope}</p>
+      <p>You manage the work, training and performance. We handle recruitment, employment administration, payroll and agreed equipment and local support.</p>
+      <a class="text-link" href="/how-it-works/">How the hiring process works →</a>
+    </aside>
+  </section>
+  <section class="section related-section">
+    <div class="wrap related-grid">
+      <div><h2>Roles to consider.</h2><ul class="related-links">{roles.filter(role => entry.roles.includes(role.slug)).map(role => <li><a href={`/roles/${role.slug}/`}>{role.title} <span aria-hidden="true">↗</span></a></li>)}</ul></div>
+      <div><h2>{industry ? 'What would you like to solve?' : 'Explore relevant industries.'}</h2><ul class="related-links">{related.map(item => <li><a href={`/${industry ? 'business-needs' : 'industries'}/${item.slug}/`}>{item.name} <span aria-hidden="true">↗</span></a></li>)}</ul></div>
+    </div>
+    <p class="wrap related-note">Our primary staffing operation is in <a href="/talent-locations/sri-lanka/">Sri Lanka</a>. {entry.slug === 'access-specialist-skills' && <>We can also explore <a href="/talent-locations/india/">India as a role-dependent sourcing option</a>. </>}Explore <a href="/pricing/">how staffing costs are scoped</a> before making a hiring decision.</p>
+  </section>
+  <CTASection/>
+</Layout>

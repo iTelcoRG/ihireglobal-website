@@ -1,0 +1,12 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import PageHero from '../../components/PageHero.astro';
+import DiscoveryList from '../../components/DiscoveryList.astro';
+import CTASection from '../../components/CTASection.astro';
+import { needs } from '../../data/discovery';
+---
+<Layout title="Offshore staffing for your business needs" description="Start with your business challenge: add capacity, reduce hiring pressure, extend hours, access skills, build a team or improve staffing cost efficiency." crumbs={[{name:'Business Needs',url:'/business-needs/'}]}>
+  <PageHero title="What would more capacity make possible?" intro="You don’t need a finished job description to start. Tell us what is holding your business back, then explore how dedicated offshore staff could help."/>
+  <section class="section wrap compact-top"><h2>Start with the change you need.</h2><DiscoveryList items={needs} base="business-needs"/></section>
+  <section class="section wrap prose"><h2>Turn a business problem into a workable role.</h2><p>Identify the recurring work, the skills it requires and who will manage it. We can then discuss responsibilities, working hours and infrastructure before recruiting. You interview the shortlisted candidates and choose who joins your team.</p><p>Already know the person you need? <a href="/roles/">Explore roles</a>. Looking for a relevant operating model? <a href="/industries/">Browse industries</a>.</p></section><CTASection/>
+</Layout>
