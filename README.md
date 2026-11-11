@@ -31,7 +31,7 @@ For the production build locally, run `npm run build`, then `npm run preview`. `
 
 Useful review routes: `/`, `/pricing/`, `/hire-talent/#enquiry`, `/use-cases/`, `/why-ihire/` and `/how-it-works/`.
 
-The repository remote is `https://github.com/iTelcoRG/ihireglobal-website`, with `main` as the baseline branch. Build reports and source/configuration are versioned. Generated output, caches, environment files, test results and `artifacts/` screenshots are excluded; existing local screenshots remain on disk. No hosting, DNS or preview deployment is configured by this workflow.
+The repository remote is `https://github.com/iTelcoRG/ihireglobal-website`, with `main` as the baseline branch. Build reports and source/configuration are versioned. Generated output, caches, environment files, test results and `artifacts/` screenshots are excluded; existing local screenshots remain on disk. No hosting, DNS or preview deployment is configured by this workflow. Publishing is a separate manual upload to the cPanel document root; see Launch status.
 
 ## Project structure
 
@@ -68,7 +68,7 @@ The employer brief uses four steps: About you; What do you need?; Skills and set
 
 ## SEO
 
-Every page supplies its own title and description. The shared layout emits canonical URLs, Open Graph/Twitter text metadata, Organization schema and breadcrumbs where appropriate. `astro.config.mjs` defines the intended public origin and sitemap integration. Review the origin before launch. Production robots allow crawling; protect any private preview at the hosting level rather than publishing it as an indexable duplicate. The 404 is noindex.
+Every page supplies its own title and description. The shared layout emits canonical URLs, Open Graph/Twitter text metadata, Organization schema and breadcrumbs where appropriate. `astro.config.mjs` sets the public origin to `https://www.ihireglobal.com` and the sitemap integration. Production robots allow crawling. `https://mail.ihireglobal.com/` still responds with `X-Robots-Tag: noindex, nofollow`. The 404 is noindex.
 
 ## Pricing and enquiry contract
 
@@ -94,12 +94,12 @@ The draft has schemaVersion 1 and source public-website. Option values are stabl
 ## Build boundaries / launch work
 
 - Enquiry form submits to the fixed cPanel email handler. Browser and server validation run before delivery. Details are emailed, not persisted in browser storage or sent to analytics. No automatic customer confirmation email is enabled.
-- Verify email, telephone, business/legal details and contact availability. None have been invented.
-- Enquiry endpoint and privacy links are implemented. Remaining privacy business review is recorded in LAUNCH.md.
+- The approved enquiry email is enquiries@ihireglobal.com. Telephone, business address and contact availability remain unset. None have been invented.
+- Enquiry endpoint and privacy links are implemented and live. Remaining privacy business review is recorded in LAUNCH.md.
 - Pricing is quote-led; no fixed prices or unfinished estimator are published.
 - Learn links to existing material. Jobs is informational; the owner deferred its backend and no applications are collected.
 - Confirm final branding and replace schematic visuals with genuine photography only if desired.
-- Itronics cPanel is selected and only the enquiry endpoint is deployed. The full site remains local. LAUNCH.md covers HTTPS, redirects, deployment and rollback.
+- The full site is published on the Itronics cPanel host. LAUNCH.md covers the 7 November 2026 cutover, HTTPS, redirects and rollback notes. `npm` scripts do not deploy.
 
 ## Future portal
 
@@ -117,9 +117,9 @@ Brand assets updated 26 September 2026: supplied black logo with blue dot on lig
 - A successful API response means the mail server accepted the message, not that the recipient read it. Failure preserves the form answers; retrying the same token avoids duplicate mail after a lost response.
 - Real browser test reference IH-20261107-E40C5224 / mail ID 1xPYJC-00000007zs5-2usu: cPanel recorded successful delivery to both iHire mailboxes and acceptance by the itelco.nz mail server. Rakesh confirmed both people received it.
 - Local connected preview (PowerShell): set $env:IHIRE_ENQUIRY_PREVIEW='1', then npm.cmd run dev -- --port 4323. This proxies only /api/enquiry.php over verified HTTPS to mail.ihireglobal.com. Without the flag, a static preview cannot execute PHP; automated browser tests mock the endpoint and never send real emails.
-- The public www/apex domain still points to Wix. The new website has NOT been published. At website launch, deploy the full dist output to the cPanel document root, preserve the private state directory, and ensure the certificate covers the main website domain. The currently installed cPanel certificate covers mail.ihireglobal.com only.
+- Public website, checked 11 November 2026: `https://www.ihireglobal.com/` returns HTTP 200 from Apache. The title is “Offshore staffing for NZ & Australian businesses | iHire Global”. Last-Modified is 7 November 2026, 10:15:02 GMT. `https://ihireglobal.com/` returns HTTP 308 to that www URL, and plain HTTP does the same. The certificate is Let’s Encrypt, covers ihireglobal.com, www.ihireglobal.com and mail.ihireglobal.com, and expires 5 February 2027, 07:23:40 GMT. Google (8.8.8.8) and Cloudflare (1.1.1.1) resolve the apex to 210.48.76.58 and www to a CNAME of ihireglobal.com. Nameservers remain ns0.wixdns.net and ns1.wixdns.net. MX is priority 0 mail.ihireglobal.com. The HTML is the Astro site, with its header, footer and that title. The Wix Premium plan was cancelled on 7 November 2026. Publishing was a manual upload to the cPanel document root, recorded in LAUNCH.md. This repository has no deploy script or workflow. A later source commit is not assumed to be what the server is serving.
 - Checks: npm.cmd run check; npm.cmd run build; npm.cmd test; node tests/enquiry-server.mjs. The PHP integration test uses a local fake SMTP server on Windows and sends no external mail.
-- Remaining launch work: privacy business review, main-domain SSL/hosting cutover and public-domain checks. Customer autoresponder is optional. No promised response time has been invented.
+- Still open: privacy business review, recorded in LAUNCH.md, and Search Console submission of /sitemap-index.xml, which is not recorded as done. The sitemap URL itself returned HTTP 200 on 11 November 2026. Customer autoresponder is optional. No promised response time has been invented.
 
 
 ## Privacy policy draft — 7 November 2026
@@ -127,13 +127,13 @@ Brand assets updated 26 September 2026: supplied black logo with blue dot on lig
 - Added /privacy/ and footer/form links. The form link opens a new tab to preserve unsent answers; no consent or marketing checkbox was introduced.
 - Scope: this rebuilt website and employer enquiries. It does not replace a candidate, employee or service-delivery privacy notice.
 - Confirmed by owner: iTelco Limited in New Zealand enters into customer contracts under iHire Global branding and owns the Sri Lankan iHire Global company, which employs/pays the Sri Lankan team. The customer website policy therefore names iTelco Limited and explains relevant information sharing with Sri Lanka. Confirm the Sri Lankan company’s exact registered name when preparing a separate candidate/employee notice.
-- Confirm practical retention/deletion arrangements and provider processing locations before publication. Policy names iTelco Limited operating under the iHire Global brand and describes known email handling, without an invented retention period or blanket legal-compliance guarantee.
+- The published policy names iTelco Limited operating under the iHire Global brand and describes known email handling. No retention period or blanket legal-compliance guarantee has been invented. Provider processing locations and the practical deletion process remain open.
 - Reference guidance: https://www.privacy.org.nz/responsibilities/collecting/ and https://www.oaic.gov.au/privacy/australian-privacy-principles/read-the-australian-privacy-principles
-- This policy is in the local preview only; no production site deployment or DNS change.
+- The privacy page is published with the site. Rechecked at https://www.ihireglobal.com/privacy/ on 11 November 2026 (HTTP 200, Last-Modified 7 November 2026, 10:15:02 GMT).
 
 
-## Launch preparation — 7 November 2026
+## Launch status — rechecked 11 November 2026
 
-See LAUNCH.md for the current checklist, legacy Wix URL map, unresolved business facts and rollback procedure. public/.htaccess is prepared but not deployed or host-tested. Run node scripts/verify-release.mjs after building. A local release ZIP and checksum are generated in artifacts/releases; these contain deployment files only. Social-sharing metadata uses public/images/social-share.jpg. No DNS changes, deployment, commits or pushes were made during preparation.
+See LAUNCH.md for the checklist, legacy URL map, unresolved business facts and rollback notes. Public checks the same day: an unknown path returns HTTP 404; `/find-talent` returns 301 to `/hire-talent/`; `/api/enquiry.php` returns HTTP 200 for GET, and HEAD returns 405 with `Allow: GET, POST`. `public/.htaccess` and the PHP endpoint are written to produce those responses. The server copies were not re-downloaded for a byte comparison. `npm run dev`, `build` and `preview` do not deploy. Run `node scripts/verify-release.mjs` after building. A local release ZIP and checksum are generated in `artifacts/releases`; these contain deployment files only. Social-sharing metadata uses `public/images/social-share.jpg`.
 
 Pricing update, 7 November 2026: owner confirmed the existing website’s starting prices remain current and are NZD: Entry Level from NZ$800/month + GST, Mid Level from NZ$1,500/month + GST, Senior Level from NZ$2,500/month + GST. These replace the unpriced scenarios; hours and inclusions remain quote-specific.
