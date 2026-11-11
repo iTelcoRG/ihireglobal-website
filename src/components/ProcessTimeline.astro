@@ -1,0 +1,53 @@
+---
+import { steps } from '../data/site';
+const stages = [
+  { title: 'Define the role', intro: 'You share the brief. We agree the role requirements with you.', ihire: 'Clarify the responsibilities, skills, working hours and setup requirements.', business: 'Share your priorities, expectations and the experience you need.' },
+  { title: 'Find your person', intro: 'We recruit and shortlist. You interview, choose and approve the quote.', ihire: 'Recruit, screen and shortlist candidates, coordinate interviews and prepare your quote.', business: 'Review profiles, interview and select your preferred candidate. Review the quote and agree the terms before proceeding.' },
+  { title: 'Get them ready', intro: 'We arrange employment and equipment. You onboard your new team member.', ihire: 'Arrange the offer, employment contracts and agreed equipment and connectivity. Confirm associated costs with you.', business: 'Provide systems access, training and a clear introduction to your team.' },
+  { title: 'Support the relationship', intro: 'You lead daily work. We handle employment administration and local support.', ihire: 'Handle payroll, leave and employment administration, plus local infrastructure support.', business: 'Lead daily work, priorities, development and performance.' },
+];
+---
+<ol class="process-timeline">
+  {stages.map((stage, index) => <li>
+    <span class="timeline-number" aria-hidden="true">{index + 1}</span>
+    <div class="timeline-content">
+      <h3>{stage.title}</h3><p class="timeline-intro">{stage.intro}</p>
+
+    </div>
+  </li>)}
+</ol>
+<details class="full-process">
+  <summary>See the full process</summary>
+  <div class="detailed-responsibilities">{stages.map(stage => <div><h3>{stage.title}</h3><dl class="stage-responsibilities"><div><dt>iHire</dt><dd>{stage.ihire}</dd></div><div><dt>Your business</dt><dd>{stage.business}</dd></div></dl></div>)}</div>
+  <ol class="full-process-steps">{steps.map(([name, body]) => <li id={name.toLowerCase()}><h3>{name}</h3><p>{body}</p></li>)}</ol>
+</details>
+<style>
+  .process-timeline { list-style: none; padding: 0; margin: 28px 0 12px; }
+  .process-timeline > li { position: relative; padding: 0 0 14px 52px; }
+  .process-timeline > li:not(:last-child)::before { content: ''; position: absolute; left: 16px; top: 34px; bottom: 0; width: 2px; background: var(--border); }
+  .timeline-number { position: absolute; left: 0; top: 0; width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; background: var(--accent); color: var(--primary); font-weight: 700; }
+  .timeline-content { display: grid; grid-template-columns: 240px 1fr; gap: 20px; align-items: start; padding: 5px 0 18px; border-bottom: 1px solid var(--border); }
+  .timeline-content h3 { font-size: 1.1rem; margin: 0; }
+  .timeline-intro { margin: 0; max-width: 760px; font-size: .92rem; line-height: 1.6; }
+  .detailed-responsibilities { display: grid; gap: 24px; margin-top: 24px; }
+  .detailed-responsibilities h3 { font-size: 1.1rem; margin-bottom: 12px; }
+  .stage-responsibilities { display: grid; grid-template-columns: 1fr 1fr; gap: 36px; margin: 0; }
+  .stage-responsibilities dt { display: inline-block; padding: 4px 10px; background: var(--accent-soft); color: var(--primary); border-radius: 4px; font-size: .8rem; font-weight: 650; margin-bottom: 9px; }
+  .stage-responsibilities > div:last-child dt { background: var(--surface); }
+  .stage-responsibilities dd { margin: 0; font-size: .92rem; line-height: 1.65; color: var(--muted); }
+  .full-process { margin-left: 52px; border-bottom: 1px solid var(--border); padding-bottom: 20px; }
+  .full-process summary { padding: 10px 0; cursor: pointer; font-weight: 650; }
+  .full-process-steps { padding-left: 24px; margin: 24px 0 0; }
+  .full-process-steps li { padding-left: 10px; margin-bottom: 22px; scroll-margin-top: 120px; }
+  .full-process-steps h3 { font-size: 1rem; margin-bottom: 6px; }
+  .full-process-steps p { margin: 0; font-size: .92rem; max-width: 800px; }
+  @media (max-width: 767px) {
+    .process-timeline > li { padding-left: 46px; padding-bottom: 14px; }
+    .timeline-number { width: 36px; height: 36px; }
+    .process-timeline > li:not(:last-child)::before { left: 17px; top: 36px; }
+    .timeline-content { grid-template-columns: 1fr; gap: 6px; padding-top: 3px; }
+    .timeline-content h3 { font-size: 1.05rem; }
+    .stage-responsibilities { grid-template-columns: 1fr; gap: 20px; }
+    .full-process { margin-left: 46px; }
+  }
+</style>

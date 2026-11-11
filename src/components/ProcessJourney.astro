@@ -1,0 +1,9 @@
+---
+import { primaryProcess } from '../data/conversion';
+import ProcessIllustration from './ProcessIllustration.astro';
+---
+<ol class="process-flow four-step">{primaryProcess.map(([name,body],index) => <li><div class="process-card-image"><ProcessIllustration step={index}/></div><div class="process-card-copy"><h3>{name}</h3><p>{body}</p></div></li>)}</ol>
+
+<style>
+  .process-card-image { padding: 0; }
+</style>

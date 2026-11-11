@@ -1,13 +1,13 @@
 /** Approved public details only. Null values deliberately keep placeholders visible. */
 export const business = {
   contact: {
-    email: null as string | null,
+    email: 'enquiries@ihireglobal.com' as string | null,
     phone: null as string | null,
     phoneHref: null as string | null,
     address: null as string | null,
     availability: null as string | null,
   },
-  enquiry: { mode: 'local-brief' as const },
+  enquiry: { mode: 'email' as const, endpoint: '/api/enquiry.php' },
 };
 
 export const ctas = {

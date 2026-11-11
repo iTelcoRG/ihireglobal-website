@@ -1,0 +1,44 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageHero from '../components/PageHero.astro';
+import { business } from '../data/business';
+const email = business.contact.email!;
+---
+<Layout title="Privacy policy" description="How iHire Global handles website enquiries, protects personal information, and responds to privacy questions and access requests." crumbs={[{name:'Privacy policy',url:'/privacy/'}]}>
+<PageHero title="Your privacy matters." intro="How we handle the information you share when you visit our website or enquire about offshore staffing."><p class="policy-date">Privacy policy · Last updated 7 November 2026</p></PageHero>
+<article class="wrap privacy-policy" aria-label="Privacy policy">
+<section><h2>Who this policy covers</h2>
+<p>iHire Global is a trading brand of iTelco Limited, New Zealand. In this policy, “we”, “us” and “our” mean that company operating under the iHire Global brand. We are responsible for personal information collected through this website and employer enquiries. For privacy questions, email <a href={'mailto:'+email}>{email}</a> and mark your message “Privacy”.</p>
+<p>We own the iHire Global company in Sri Lanka, which employs and pays the Sri Lankan team. This policy covers website visitors and employer enquiries; it does not serve as a candidate or employee privacy notice. Recruitment applications, employee records and information handled while delivering services require separate, relevant privacy information.</p></section>
+<section><h2>What we collect and why</h2>
+<p>We collect information you give us in the enquiry form, by email or during follow-up conversations. This can include your name, company, work email, optional phone number, country and staffing requirements: roles, responsibilities, skills, experience, working hours, preferred location, timing, equipment and any notes you provide.</p>
+<p>We use this information to respond, understand your requirements, discuss suitable staffing options, prepare indicative quotes and maintain a record of our conversation. Submitting an enquiry does not subscribe you to a marketing mailing list.</p>
+<p>Providing information is your choice. Required form fields help us respond and scope your needs; without them, the form cannot be sent. You can email a general question instead, including without giving your name, although we may need more details to help you.</p>
+<p>Please do not include identity documents, payment details, health information or other sensitive personal information. Avoid including other people’s personal details unless you are authorised to share them.</p></section>
+<section><h2>Who receives your enquiry</h2>
+<p>Form submissions are emailed to <a href={'mailto:'+email}>{email}</a> and forwarded to the team members responsible for enquiries. Information is held in business email systems and may be accessed by authorised people who need it to respond or scope your requirements.</p>
+<p>Our website hosting and email providers process information to operate these services. The current enquiry delivery uses Itronics Cloud hosting and business email services, including Microsoft 365 through email forwarding. Information may also be shared where required by law.</p>
+<p>We may share relevant enquiry information with our iHire Global company in Sri Lanka to assess staffing needs and coordinate recruitment and support. This means your information may be accessed in New Zealand and Sri Lanka. Our hosting or email providers may process information in other countries. Contact us if you need details about overseas handling before sharing information.</p></section>
+<section><h2>Storage, security and retention</h2>
+<p>Enquiry messages are retained in business email systems for follow-up and related business records. We aim to keep personal information only for as long as needed for the purpose it was collected, including any applicable record-keeping obligations or disputes, and then delete it or remove identifying details.</p>
+<p>The enquiry service uses encrypted web connections, server-side checks and spam controls. No internet or email service can guarantee complete security. Please contact us promptly if you believe information sent to us has been exposed or misused.</p>
+<p>The form also keeps limited technical records to prevent spam and duplicate submissions, including request times, protected representations of IP addresses and submission references. These records are separate from your enquiry message. Hosting and email systems may keep their own operational and security logs.</p></section>
+<section><h2>Cookies and website activity</h2>
+<p>This website does not use advertising trackers or analytics cookies. The enquiry form does not save your answers in browser storage. Our hosting provider may record technical information such as IP addresses, requested pages, browser details and access times for operating and protecting the service.</p>
+<p>Links to other websites take you to services with their own privacy practices.</p></section>
+<section><h2>Access, corrections and concerns</h2>
+<p>You can ask for access to personal information we hold about you, ask us to correct it, or ask about deleting information that is no longer needed. Email <a href={'mailto:'+email}>{email}</a> with enough detail for us to find your records. We may need to confirm your identity before releasing or changing information.</p>
+<p>If you have a complaint, describe what happened and the outcome you are seeking. We will review it, contact you if we need more information and explain our response. Any applicable legal rights and time limits continue to apply.</p>
+<p>If a concern is unresolved, you can seek guidance from the relevant privacy regulator, including New Zealand’s <a href="https://www.privacy.org.nz/">Office of the Privacy Commissioner</a> or Australia’s <a href="https://www.oaic.gov.au/privacy/privacy-complaints">Office of the Australian Information Commissioner</a>, depending on which laws apply.</p></section>
+<section><h2>Updates to this policy</h2><p>We may update this policy when our services or information-handling practices change. The date above shows the latest revision.</p></section>
+</article>
+</Layout>
+<style>
+.policy-date{font-size:.9rem;color:#53605f}
+.privacy-policy{max-width:850px;padding-bottom:clamp(3rem,7vw,6rem)}
+.privacy-policy section{padding-block:1.6rem;border-top:1px solid #d9d9cf}
+.privacy-policy h2{font-size:clamp(1.35rem,2.4vw,1.9rem);line-height:1.25;margin:0 0 1rem}
+.privacy-policy p{line-height:1.8;margin:0 0 1rem}
+.privacy-policy a{text-decoration:underline;text-underline-offset:.2em;overflow-wrap:anywhere}
+.privacy-policy p:last-child{margin-bottom:0}
+</style>

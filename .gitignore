@@ -25,3 +25,6 @@ Desktop.ini
 *.swo
 *~
 .idea/
+
+# Private mail rate-limit/idempotency state; never publish or commit
+.ihire-enquiry/

@@ -7,6 +7,6 @@ const { items, base } = Astro.props;
   {items.map((item) => <a href={`/${base}/${item.slug}/`}>
     <h3>{item.name}</h3>
     <p>{item.heading}</p>
-    <span class="discovery-arrow" aria-hidden="true">↗</span>
+
   </a>)}
 </div>

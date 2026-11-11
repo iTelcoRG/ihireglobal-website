@@ -1,8 +1,47 @@
-<div class="team-scene" role="img" aria-label="Your New Zealand or Australian business directs a dedicated offshore team member. iHire Global supports recruitment, employment, payroll and equipment.">
-  <div class="scene-ring ring-outer" aria-hidden="true"></div><div class="scene-ring ring-inner" aria-hidden="true"></div>
-  <div class="scene-business"><span class="building-symbol" aria-hidden="true">▦</span><div><strong>Your business</strong><p>New Zealand & Australia</p></div><span class="scene-arrow" aria-hidden="true">↗</span></div>
-  <div class="scene-connection"><span aria-hidden="true"></span><p>Your direction. Their expertise.</p><span aria-hidden="true"></span></div>
-  <div class="scene-person"><div class="people-art" aria-hidden="true"><svg viewBox="0 0 200 160"><path d="M18 154c0-44 22-62 51-62s48 24 48 62" fill="#68716c"/><circle cx="69" cy="64" r="28" fill="#e9dfbe"/><path d="M79 160c0-48 24-73 59-73s56 28 56 73" fill="#ffc62f"/><circle cx="138" cy="52" r="33" fill="#fff6dc"/><path d="M108 42c2-27 53-40 63 0-19 4-35-4-42-12-4 8-11 10-21 12" fill="#a28b55"/></svg></div><strong>Your dedicated<br/>team member</strong><p>In your systems.<br/>Part of your team.</p></div>
-  <div class="scene-support"><div><strong>iHire Global</strong><span aria-hidden="true">✳</span></div><p>Behind your team, every step.</p><ul><li>Recruitment</li><li>Employment</li><li>Payroll</li><li>Equipment & support</li></ul></div>
-  <span class="scene-spark" aria-hidden="true">✳</span>
+<div class="team-scene" role="img" aria-label="Your New Zealand or Australian business directs a dedicated offshore team member, illustrated with a representative AI-generated portrait. Remote ready, with long-term support and real impact. iHire Global supports recruitment, employment, payroll and equipment.">
+  <div class="scene-business"><span class="building-symbol" aria-hidden="true">▦</span><div><strong>Your business</strong><p>New Zealand & Australia</p></div></div>
+  <div class="scene-person">
+    <img class="team-portrait" src="/images/hero-team-member.webp" width="640" height="800" alt="" fetchpriority="high" decoding="async" />
+    <div class="person-copy">
+      <strong>Your dedicated<br/>team member</strong><p>In your systems.<br/>Part of your team.</p>
+      <ul class="member-benefits" aria-hidden="true">
+        <li><svg viewBox="0 0 32 32" fill="none"><path d="M7 6h18v16H7zM3 26l4-4h18l4 4H3Z"/></svg><span>Remote<br/>ready</span></li>
+        <li><svg viewBox="0 0 32 32" fill="none"><circle cx="13" cy="9" r="4"/><path d="M4 27v-4a9 9 0 0 1 18 0v4M22 5a4 4 0 0 1 0 8m3 4a7 7 0 0 1 4 6v4"/></svg><span>Long-<wbr/>term<br/>support</span></li>
+        <li><svg viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="11"/><path d="m10 16 4 4 8-9"/></svg><span>Real<br/>impact</span></li>
+      </ul>
+    </div>
+  </div>
+  <div class="scene-support"><img class="support-logo" src="/brand/ihire-logo.svg" width="180" height="56.25" alt="iHire Global" /><p>Behind your team, every step.</p><ul><li>Recruitment</li><li>Employment</li><li>Payroll</li><li>Equipment & support</li></ul></div>
 </div>
+
+<style>
+  .team-scene { background: linear-gradient(145deg, #ffdf38 0%, #ffd02f 44%, #f3b719 100%); justify-content: center; min-height: 0; padding-block: 24px; }
+  .scene-person { margin-top: 26px; display: grid; grid-template-columns: 1fr 1fr; width: 100%; padding: 0; overflow: hidden; background: transparent; isolation: isolate; text-align: left; transform: rotate(3deg) translateZ(0); box-shadow: 9px 12px 22px #58431530; }
+  .team-portrait { display: block; width: 100%; height: 260px; min-height: 260px; object-fit: cover; object-position: center; }
+  .person-copy { align-self: stretch; display: flex; flex-direction: column; justify-content: center; background: var(--primary); padding: 24px 18px; }
+  .person-copy strong { display: block; font-size: clamp(1.12rem, 1.8vw, 1.55rem); line-height: 1.2; }
+  .person-copy strong::before { content: ""; display: block; width: 24px; height: 3px; background: var(--accent); margin-bottom: 16px; }
+  .member-benefits { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; padding: 0; margin: 24px 0 0; list-style: none; }
+  .member-benefits li { display: flex; flex-direction: column; align-items: center; gap: 5px; text-align: center; font-size: .625rem; line-height: 1.25; color: #f2f3ee; }
+  .member-benefits svg { width: 25px; height: 25px; stroke: currentColor; stroke-width: 1.2; stroke-linecap: round; stroke-linejoin: round; }
+  .person-copy p { font-size: .8rem; line-height: 1.6; }
+  .scene-support { margin-top: 26px; padding-block: 16px; }
+  .support-logo { display: block; width: 150px; max-width: 100%; height: auto; transform: translateX(-8.25%); }
+  @media (min-width: 768px) and (max-width: 1050px) {
+    .person-copy { padding: 20px 12px; }
+    .team-portrait { min-height: 235px; }
+  }
+  @media (max-width: 767px) {
+    .team-portrait { min-height: 230px; }
+    .person-copy { padding: 20px 14px; }
+    .person-copy strong { font-size: clamp(1rem, 4vw, 1.4rem); }
+    .person-copy p { font-size: .75rem; }
+    .scene-support { margin-top: 26px; }
+  }
+  @media (max-width: 360px) {
+    .team-portrait { min-height: 210px; }
+    .person-copy { padding: 16px 10px; }
+    .person-copy strong { font-size: .94rem; }
+    .person-copy p { font-size: .69rem; }
+  }
+</style>

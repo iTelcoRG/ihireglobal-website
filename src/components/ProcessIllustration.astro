@@ -1,0 +1,9 @@
+---
+interface Props { step: number; }
+const { step } = Astro.props;
+const images = ['staffing-brief', 'candidate-screening', 'video-interview', 'team-setup'];
+---
+<img class="process-photo" src={`/images/process/${images[step]}.webp`} width="960" height="640" alt="" loading="lazy" decoding="async" />
+<style>
+  .process-photo { display: block; width: 100%; height: auto; aspect-ratio: 320 / 210; object-fit: cover; }
+</style>

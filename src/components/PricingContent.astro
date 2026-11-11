@@ -1,14 +1,7 @@
 ---
 import CTASection from './CTASection.astro';
-import { ctas } from '../data/business';
-const process = [
-  ['Tell us what you need', 'Describe the work, skills, hours and number of people you need. An initial conversation does not commit you to a hire.'],
-  ['We scope the role', 'We clarify responsibilities, experience, location preferences and how the employee will work with your team.'],
-  ['We recruit and validate the market', 'We recruit against your requirement and establish candidate availability and salary expectations.'],
-  ['We establish the setup', 'We confirm the employment arrangements, equipment, connectivity and any role-specific infrastructure needed.'],
-  ['You receive a clear quote', 'We set out the indicative staffing cost, inclusions, assumptions and any separate setup or equipment charges.'],
-  ['You decide whether to proceed', 'You review the quote before making a commitment. You choose the employee; an offer follows your selection and agreement on the terms.'],
-];
+import OperationalProof from './OperationalProof.astro';
+import { pricingExamples } from '../data/conversion';
 const components = [
   ['Employee cost', 'The employee’s salary and relevant employment costs, based on the role, candidate expectations and agreed employment arrangements.'],
   ['iHire service', 'Recruitment, candidate screening, employment administration, payroll administration and agreed ongoing local support.'],
@@ -17,12 +10,47 @@ const components = [
   ['Power resilience', 'A UPS or other backup power arrangements where required by the role and working environment.'],
   ['Role-specific requirements', 'Specialist hardware or additional infrastructure needed to perform the work. Requirements are confirmed during scoping.'],
 ];
+const questions = [
+ ['Are these fixed packages?', 'No. The prices shown are starting monthly amounts in New Zealand dollars, plus GST. Your final quote depends on the role, candidate experience, working hours and agreed setup.'],
+ ['When will I know the cost?', 'We scope your brief, recruit and validate candidate expectations, then establish employment and infrastructure requirements. You receive an indicative quote to review before committing.'],
+ ['Is equipment included?', 'Equipment, connectivity and backup power are agreed for the role. The quote identifies inclusions and any separate setup or infrastructure charges.'],
+ ['Who manages the employee?', 'You manage daily work, priorities, training and performance. iHire handles the agreed recruitment and employment infrastructure.'],
+];
 ---
-<section class="section wrap compact-top detail-grid">
-  <div><h2>Start with the role.<br/>Then establish the cost.</h2><p>There are no standard public packages or fixed price bands. We first understand your requirement, recruit against it and validate the candidate market before providing a clear indicative quote.</p><p>Costs depend on the role and responsibilities, required skills and experience, sourcing country, candidate salary expectations, hours and headcount. Equipment, connectivity, power backup, specialist infrastructure and other employment requirements also shape the quote.</p></div>
-  <aside class="surface-panel"><h2>A quote you can review before you commit.</h2><p>Tell us the role, experience and skills you need and we’ll scope the likely staffing requirement with you.</p><a class="button" href="/hire-talent/#enquiry">{ctas.pricing} <span aria-hidden="true">↗</span></a><p class="fine-print">Start by preparing your requirements. The current form downloads a local brief; it does not send an enquiry.</p></aside>
+<section class="section wrap compact-top pricing-examples" aria-labelledby="example-heading">
+  <div class="section-heading"><h2 id="example-heading">From everyday support to senior expertise.</h2><p>Starting monthly prices in New Zealand dollars, plus GST.</p></div>
+  <div class="pricing-grid">{pricingExamples.map((item) => <article class="pricing-example"><img class="pricing-image" src={item.image} alt={item.imageAlt} width="900" height="600" loading="lazy" decoding="async"/><h3>{item.title}</h3><p class="pricing-description">{item.description}</p><div class="price-guidance"><strong>{item.monthlyGuidance}</strong><span>per month + GST</span><span class="price-inclusions">All-inclusive: salary and management</span></div><p class="scenario-factors">{item.factors}</p><a class="button" href="/hire-talent/#enquiry">Get an Indicative Quote </a></article>)}</div>
+  <p class="pricing-qualifier">Starting prices include salary and iHire management. Role examples show the kinds of work at each level; the scope and experience required determine the quote. Working hours, equipment, connectivity and any separate setup costs are agreed in your quote before you commit.</p>
 </section>
-<section class="section wrap compact-top"><h2>How we get to your quote.</h2><ol class="long-process quote-process">{process.map(([name, body]) => <li><h3>{name}</h3><p>{body}</p></li>)}</ol></section>
-<section class="section related-section"><div class="wrap"><div class="section-heading"><h2>What your quote may include.</h2><p>These are possible cost components, not a standard bundle. Each item is scoped to the employee’s role and your agreed requirements.</p></div><div class="feature-grid">{components.map(([name, body]) => <article><h3>{name}</h3><p>{body}</p></article>)}</div></div></section>
-<section class="section wrap detail-grid"><div><h2>Know what is included.</h2><p>Your quote should make the ongoing staffing cost and any separate setup, equipment or infrastructure charges clear. Not every employee needs every item listed, and inclusions are confirmed before you proceed.</p><p>You continue to manage day-to-day work, priorities, training and performance. iHire handles the agreed recruitment and employment infrastructure.</p><a class="text-link" href="/how-it-works/">{ctas.supporting} <span aria-hidden="true">→</span></a></div><div class="estimator-note"><h3>Staffing cost estimator coming later.</h3><p>We plan to introduce an estimator once historical quote and placement data can support reliable ranges. For now, a role-specific quote is the way to understand the likely cost.</p></div></section>
+<section class="section pricing-factors"><div class="wrap detail-grid"><div><h2>What shapes the final price?</h2><p>The person, the working arrangement and the setup they need.</p><a class="text-link" href="/hire-talent/#enquiry">Describe your requirements &rarr;</a></div><dl class="factor-list"><div><dt>The role</dt><dd>Responsibilities, skills, experience and candidate salary expectations.</dd></div><div><dt>The working day</dt><dd>Hours, headcount, sourcing location and coverage requirements.</dd></div><div><dt>The setup</dt><dd>Equipment, connectivity, power resilience and specialist infrastructure.</dd></div></dl></div></section>
+<section class="section wrap"><div class="section-heading"><h2>What a quote may include.</h2><p>Clear inclusions and assumptions, with any separate setup costs identified.</p></div><div class="feature-grid quote-inclusions">{components.map(([name,body]) => <article><h3>{name}</h3><p>{body}</p></article>)}</div></section>
+<section class="section related-section"><div class="wrap"><h2>From requirement to a clear quote.</h2><ol class="quote-path"><li><h3>Describe the role</h3><p>Tell us the work, skills, hours and setup you need.</p></li><li><h3>We validate the scope</h3><p>We recruit, establish candidate expectations and confirm employment and infrastructure requirements.</p></li><li><h3>Review before committing</h3><p>Review the indicative quote and agree terms before an offer is made to your chosen candidate.</p></li></ol><OperationalProof/></div></section>
+<section class="section wrap pricing-faq"><h2>Your pricing questions.</h2>{questions.map(([question,answer]) => <details><summary>{question}</summary><p>{answer}</p></details>)}</section>
 <CTASection mode="pricing"/>
+
+<style>
+
+.pricing-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:0 22px; }
+.pricing-example { display:grid; grid-template-columns:minmax(0,1fr); grid-template-rows:subgrid; grid-row:span 6; row-gap:0; position:relative; overflow:hidden; padding:0 0 26px; border:1px solid var(--border); border-radius:12px; background:var(--background); }
+.pricing-example:nth-child(2) {box-shadow:0 12px 30px #20282b12}
+.pricing-example:nth-child(2)::before {content:"";position:absolute;inset:0 0 auto;height:5px;background:var(--accent);z-index:1}
+.pricing-image {width:100%;height:auto;aspect-ratio:3/2;object-fit:cover;display:block}
+.pricing-example h3 {font-size:1.6rem;line-height:1.25;margin:24px 24px 12px}
+.pricing-example .pricing-description {font-size:1rem;margin:0 24px 20px;line-height:1.65}
+.price-guidance {border-block:1px solid var(--border);padding-block:20px;margin:0 24px 20px}
+.price-guidance strong {font-size:clamp(1.65rem,2.4vw,2rem);line-height:1.3;display:block;letter-spacing:-.03em}
+.price-inclusions {font-weight:600;margin-top:12px}
+.price-guidance span {display:block;font-size:1rem}
+.pricing-example .scenario-factors {font-size:1rem;line-height:1.7;margin:0 24px 24px}
+.pricing-example .button {padding:14px;gap:12px;font-size:1rem;justify-content:space-between;margin:0 24px;align-self:end}
+@media(max-width:1000px) and (min-width:901px) {
+ .pricing-grid{column-gap:14px}
+ .pricing-example h3,.pricing-example .pricing-description,.price-guidance,.pricing-example .scenario-factors,.pricing-example .button{margin-inline:18px}
+ .pricing-example .button{font-size:1rem}
+}
+@media(max-width:900px) {
+ .pricing-grid{grid-template-columns:1fr;gap:26px}
+ .pricing-example{grid-row:auto;grid-template-rows:auto auto auto auto auto auto}
+}
+
+</style>

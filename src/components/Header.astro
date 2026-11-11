@@ -1,10 +1,28 @@
 ---
 import {nav} from '../data/site';
 const path=Astro.url.pathname;
+const talentLinks = [['Hire Talent overview','/hire-talent/'],['Roles','/roles/'],['Industries','/industries/'],['Talent Locations','/talent-locations/'],['Business Needs','/business-needs/']];
+const mainLinks = nav.filter(([,url]) => ['/how-it-works/','/why-ihire/','/pricing/','/resources/'].includes(url));
 ---
-<header class="site-header"><div class="wrap header-inner"><a class="wordmark" href="/" aria-label="iHire Global home">iHire<span>Global</span><i aria-hidden="true"></i></a><button class="menu-toggle" aria-expanded="false" aria-controls="site-nav" hidden>Menu <span aria-hidden="true">☰</span></button><nav id="site-nav" aria-label="Main navigation"><div class="primary-nav">{nav.map(([label,url])=><a href={url} aria-current={path.startsWith(url)?'page':undefined}>{label}</a>)}</div><div class="nav-actions"><a class="job-link" href="/jobs/">Find a Job</a><a class="contact-link" href="/contact/">Contact</a><a class="button small" href="/hire-talent/#enquiry">Find Talent <span aria-hidden="true">↗</span></a></div></nav></div></header>
+<header class="site-header"><div class="wrap header-inner"><a class="wordmark brand-logo" href="/" aria-label="iHire Global home"><img src="/brand/ihire-logo.svg" alt="iHire Global" width="800" height="250" decoding="async"/></a><button class="menu-toggle" aria-expanded="false" aria-controls="site-nav" hidden>Menu <span aria-hidden="true">☰</span></button><nav id="site-nav" aria-label="Main navigation"><div class="primary-nav"><details class="talent-menu"><summary>Hire Talent<span class="submenu-indicator" aria-hidden="true"></span></summary><div class="talent-submenu">{talentLinks.map(([label,url]) => <a href={url} aria-current={path.startsWith(url)?'page':undefined}>{label}</a>)}</div></details>{mainLinks.map(([label,url])=><a href={url} aria-current={path.startsWith(url)?'page':undefined}>{label}</a>)}<a class="contact-link" href="/contact/" aria-current={path.startsWith('/contact/')?'page':undefined}>Contact</a></div><div class="nav-actions"><a class="button small job-link" href="/jobs/">Find a Job</a><a class="button small" href="/hire-talent/#enquiry">Find Talent <span aria-hidden="true">→</span></a></div></nav></div></header>
 <script>
 const toggle=document.querySelector<HTMLButtonElement>('.menu-toggle');
 const nav=document.querySelector<HTMLElement>('#site-nav');
-if(toggle&&nav){toggle.hidden=false; nav.classList.add('enhanced');const close=()=>{toggle.setAttribute('aria-expanded','false');nav.classList.remove('open');};toggle.addEventListener('click',()=>{const open=toggle.getAttribute('aria-expanded')!=='true';toggle.setAttribute('aria-expanded',String(open));nav.classList.toggle('open',open);});document.addEventListener('keydown',(event)=>{if(event.key==='Escape'&&toggle.getAttribute('aria-expanded')==='true'){close();toggle.focus();}});nav.addEventListener('click',(event)=>{if((event.target as HTMLElement).closest('a'))close();});matchMedia('(min-width: 1180px)').addEventListener('change',close);}
+const talentMenu=document.querySelector<HTMLDetailsElement>('.talent-menu');
+const talentSummary=talentMenu?.querySelector('summary');
+const hoverMenu = matchMedia('(min-width: 1400px) and (hover: hover) and (pointer: fine)');
+if(talentMenu){
+  let openedByHover=false;
+  talentMenu.addEventListener('pointerenter', () => { if(hoverMenu.matches && !talentMenu.open){openedByHover=true;talentMenu.open=true;} });
+  talentSummary?.addEventListener('click', event => {if(openedByHover && talentMenu.open){event.preventDefault();openedByHover=false;}});
+  talentMenu.addEventListener('pointerleave', () => {
+    if(hoverMenu.matches && !talentMenu.contains(document.activeElement)) talentMenu.open=false;
+  });
+  talentMenu.addEventListener('focusout', event => {
+    if(!talentMenu.contains(event.relatedTarget as Node) && !talentMenu.matches(':hover')) talentMenu.open=false;
+  });
+}
+document.addEventListener('click', event => { if(talentMenu?.open && !talentMenu.contains(event.target as Node)) talentMenu.open=false; });
+document.addEventListener('keydown', event => { if(event.key==='Escape' && talentMenu?.open){ talentMenu.open=false; talentSummary?.focus(); event.stopImmediatePropagation(); } });
+if(toggle&&nav){toggle.hidden=false; nav.classList.add('enhanced');const close=()=>{toggle.setAttribute('aria-expanded','false');nav.classList.remove('open');};toggle.addEventListener('click',()=>{const open=toggle.getAttribute('aria-expanded')!=='true';toggle.setAttribute('aria-expanded',String(open));nav.classList.toggle('open',open);});document.addEventListener('keydown',(event)=>{if(event.key==='Escape'&&toggle.getAttribute('aria-expanded')==='true'){close();toggle.focus();}});nav.addEventListener('click',(event)=>{if((event.target as HTMLElement).closest('a')){close();if(talentMenu)talentMenu.open=false;}});matchMedia('(min-width: 1400px)').addEventListener('change',close);}
 </script>

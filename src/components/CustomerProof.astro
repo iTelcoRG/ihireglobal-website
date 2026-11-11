@@ -1,0 +1,69 @@
+---
+import { approvedCustomerProof as proof } from '../data/conversion';
+---
+{proof.quotes.length > 0 && <section class="section testimonials" aria-labelledby="testimonial-heading">
+  <div class="wrap">
+    <div class="section-heading"><h2 id="testimonial-heading">Experience shared by our customers.</h2></div>
+    <div class="testimonial-controls" hidden><button type="button" data-testimonial-prev aria-label="Previous testimonials" aria-controls="testimonial-track"><span aria-hidden="true">←</span></button><button type="button" data-testimonial-next aria-label="Next testimonials" aria-controls="testimonial-track"><span aria-hidden="true">→</span></button></div>
+    <div class="testimonial-grid" id="testimonial-track" role="region" aria-label="Customer testimonials — scroll for more" tabindex="0">{proof.quotes.map(item => <figure class="testimonial-card">
+      <div class="testimonial-stars" aria-hidden="true">★★★★★</div>
+      <span class="testimonial-quote-mark" aria-hidden="true">“</span>
+      <blockquote>“{item.quote}”</blockquote>
+      <figcaption class="testimonial-attribution">
+        <span class="testimonial-avatar" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="8" r="4"/><path d="M4 21v-2a8 8 0 0 1 16 0v2"/></svg></span>
+        <span class="testimonial-person"><strong>{item.attribution}, Director</strong><span>{item.company}</span></span>
+      </figcaption>
+    </figure>)}</div>
+  </div>
+</section>}
+<style>
+.testimonials {background:var(--surface)}
+.testimonial-grid {display:grid;grid-auto-flow:column;grid-auto-columns:calc((100% - 48px)/3);gap:24px;overflow-x:auto;scroll-snap-type:x mandatory;overscroll-behavior-x:contain;scrollbar-color:var(--primary) var(--surface);padding-bottom:18px}
+.testimonial-controls:not([hidden]) {display:flex;justify-content:flex-end;gap:12px;margin-bottom:20px}
+.testimonial-controls button {display:grid;place-items:center;width:48px;height:48px;background:var(--accent);color:var(--primary);border:1px solid var(--primary);border-radius:50%;font-size:1.5rem}
+.testimonial-controls button:disabled {opacity:.4}
+.testimonial-grid:focus-visible {outline:3px solid #846100;outline-offset:5px}
+.testimonial-card {scroll-snap-align:start;min-width:0;display:flex;flex-direction:column;background:var(--primary);color:var(--background);padding:30px;margin:0;border:1px solid #465154;border-radius:12px}
+
+.testimonial-stars {color:var(--accent);font-size:1.4rem;letter-spacing:.15em;line-height:1.2;margin-bottom:22px}
+.testimonial-quote-mark {color:var(--accent);font-family:Georgia,serif;font-size:4.5rem;line-height:.8;margin-top:8px}
+.testimonial-card blockquote {margin:0 0 30px;font-size:1.25rem;line-height:1.65;color:var(--background);font-style:italic}
+.testimonial-avatar {display:grid;place-items:center;flex:0 0 48px;width:48px;height:48px;border-radius:50%;background:#465154;color:var(--background)}
+.testimonial-avatar svg {width:28px;height:28px}
+.testimonial-person {display:flex;flex-direction:column;gap:4px;min-width:0}
+.testimonial-card p {color:#e2e6e3;font-size:1rem;line-height:1.7;margin-bottom:28px}
+.testimonial-attribution {display:flex;align-items:flex-start;gap:14px;border-top:1px solid #596461;padding-top:20px;margin-top:auto;font-size:1rem;line-height:1.5}
+.testimonial-attribution strong {color:var(--background)}
+.testimonial-attribution span {color:#e2e6e3}
+@media(max-width:1000px) {
+.testimonial-grid {grid-auto-columns:calc((100% - 24px)/2)}
+}
+@media(max-width:600px) {
+.testimonial-grid {grid-auto-columns:100%}
+.testimonial-card {padding:24px}
+}
+</style>
+<script>
+document.querySelectorAll<HTMLElement>('.testimonials').forEach(section => {
+  const track = section.querySelector<HTMLElement>('.testimonial-grid');
+  const controls = section.querySelector<HTMLElement>('.testimonial-controls');
+  const previous = section.querySelector<HTMLButtonElement>('[data-testimonial-prev]');
+  const next = section.querySelector<HTMLButtonElement>('[data-testimonial-next]');
+  if (!track || !controls || !previous || !next) return;
+  controls.hidden = false;
+  const update = () => {
+    previous.disabled = track.scrollLeft <= 2;
+    next.disabled = track.scrollLeft >= track.scrollWidth - track.clientWidth - 2;
+  };
+  const move = (direction: number) => {
+    const card = track.querySelector<HTMLElement>('.testimonial-card');
+    if (!card) return;
+    track.scrollBy({left: direction * (card.getBoundingClientRect().width + parseFloat(getComputedStyle(track).columnGap)), behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth'});
+  };
+  previous.addEventListener('click', () => move(-1));
+  next.addEventListener('click', () => move(1));
+  track.addEventListener('scroll', update, {passive:true});
+  new ResizeObserver(update).observe(track);
+  update();
+});
+</script>

@@ -1,0 +1,6 @@
+---
+import { operationalProof } from '../data/conversion';
+interface Props { index?: number; }
+const proof = operationalProof[Astro.props.index ?? 0];
+---
+<aside class="operational-proof"><div><h2>{proof.title}</h2><p>{proof.body}</p><a class="text-link" href={proof.href}>{proof.link} <span aria-hidden="true">→</span></a></div></aside>

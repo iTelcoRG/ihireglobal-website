@@ -5,7 +5,7 @@
   --background:#fffefa;
   --surface:#f4f2eb;
   --text:#20282b;
-  --muted-text:#5c615f;
+  --muted-text:#454d4b;
   --border:#deded5;
   --success:#226a42;
   --error:#a52a30;
@@ -451,7 +451,7 @@ strong {
   color:#eef5f1}
 .footer-grid>div>a:not(.wordmark) {
   display:block;
-  font-size:.73rem;
+  font-size:.85rem;
   margin-bottom:14px;
   text-decoration:none;
   color:#c2d0d1}
@@ -473,15 +473,6 @@ strong {
   gap:25px;
   font-size:.61rem;
   color:#b4c5c8}
-.breadcrumbs {
-  display:flex;
-  flex-wrap:wrap;
-  gap:12px;
-  padding-top:30px;
-  font-size:.69rem;
-  color:var(--muted-text)}
-.breadcrumbs a {
-  text-decoration:none}
 .page-hero {
   padding-block:65px 65px}
 .page-hero h1 {
@@ -865,8 +856,6 @@ input:user-invalid,textarea:user-invalid,select:user-invalid {
   grid-template-columns:1fr}
 .placeholder-panel {
   padding:25px}
-.breadcrumbs {
-  font-size:.64rem}
 }
 
 @media(prefers-reduced-motion:reduce) {

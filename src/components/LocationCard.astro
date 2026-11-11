@@ -3,4 +3,15 @@ import type {locations} from '../data/site';
 interface Props {location:(typeof locations)[number];}
 const {location}=Astro.props;
 ---
-<a class:list={['location-card',{'established':location.slug==='sri-lanka'}]} href={`/talent-locations/${location.slug}/`}><h3>{location.name} <span aria-hidden="true">↗</span></h3><p>{location.slug==='sri-lanka'?'Our primary staffing operation.':'Available through our recruitment network, depending on your role.'}</p></a>
+<a class:list={['location-card',{'established':location.slug==='sri-lanka'}]} href={`/talent-locations/${location.slug}/`}>
+  <img class="country-image" src={`/images/countries/${location.slug}.webp`} width="800" height="600" alt={`AI-generated satellite-style illustration of ${location.name}`} loading="lazy" decoding="async"/>
+  <div class="location-card-copy"><h3>{location.name}</h3><p>{location.slug==='sri-lanka'?'Our primary staffing operation.':'Available through our recruitment network, depending on your role.'}</p></div>
+</a>
+
+<style>
+  .location-card { display: flex; flex-direction: column; padding: 0; border: 1px solid var(--border); border-radius: 10px; overflow: hidden; background: var(--background); box-shadow: 0 8px 20px #20282b0d; }
+  .location-card.established { background: var(--accent); border-color: var(--accent); }
+  .country-image { display: block; width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: contain; background: #07354b; }
+  .location-card-copy { display: flex; flex-direction: column; padding: 24px 18px; flex: 1; }
+  @media (max-width: 767px) { .location-card-copy { padding: 22px 16px; } }
+</style>

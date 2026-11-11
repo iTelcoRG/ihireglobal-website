@@ -1,0 +1,13 @@
+---
+interface Props { kind: 'monitoring' | 'commerce' | 'verification' | 'team'; }
+const { kind } = Astro.props;
+---
+<figure class:list={['case-visual', `visual-${kind}`]}>
+  <div class="visual-art" aria-hidden="true">
+    {kind === 'monitoring' && <><div class="visual-toolbar"><span>Monitoring workspace</span><i></i><i></i><i></i></div><div class="monitor-grid">{[1,2,3,4].map(() => <div><span class="monitor-line"></span><span class="monitor-corner"></span></div>)}</div><div class="visual-note">Observe <span>→</span> Escalate <span>→</span> Handover</div></>}
+    {kind === 'commerce' && <><div class="visual-toolbar"><span>Product workspace</span><i></i><i></i><i></i></div><div class="product-work"><div class="product-shape"></div><div><span>Product information</span><b></b><b></b><b></b><span>Catalogue · Content · Details</span></div></div><div class="visual-note">Your store. Your priorities.</div></>}
+    {kind === 'verification' && <><div class="call-symbol">☎</div><div class="call-lines">{[16,30,48,24,60,38,22,42,18].map(height => <i style={`height:${height}px`}></i>)}</div><div class="verification-path"><span>Agreed script</span><span>Verification call</span><span>Recorded handover</span></div></>}
+    {kind === 'team' && <><div class="team-hub">Your business</div><div class="team-connectors"></div><div class="team-roles"><span>Operations</span><span>Digital<br/>marketing</span><span>Digital<br/>platforms</span></div><div class="visual-note">Dedicated people. Shared direction.</div></>}
+  </div>
+  <figcaption>Illustrative workflow · representative visual</figcaption>
+</figure>

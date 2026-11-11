@@ -23,7 +23,7 @@ export const industries: DiscoveryPage[] = [
     context: 'Start with a clearly bounded process such as appointment administration, record entry or general enquiries. Give the employee approved scripts, a named supervisor and a clear route for questions that require a clinical team member.',
     work: ['Coordinate bookings and appointment reminders using approved processes', 'Enter and check administrative data within agreed access permissions', 'Respond to general patient enquiries and route clinical questions', 'Maintain approved website content and routine back-office records'],
     planning: 'Before recruiting, agree the systems involved, the information the employee needs to access and which decisions stay with your team. Review privacy, access and any role-specific requirements with your own responsible advisers before sharing patient information.',
-    scope: 'These are potential non-clinical support use cases, not a claim of existing healthcare clients or regulated clinical capability. Clinical advice, triage and treatment are outside the roles described here.',
+    scope: "Dedicated non-clinical support for your administrative workflows, with responsibilities and access agreed around your practice. Clinical advice, triage and treatment remain with your clinical team.",
     roles: ['administration', 'customer-service', 'digital-marketing'], related: ['add-capacity', 'reduce-hiring-pressure']
   },
   {
@@ -47,7 +47,7 @@ export const industries: DiscoveryPage[] = [
     context: 'Our operational experience includes telephone verification of door-to-door sales. We can use that practical experience to discuss structured calls, accurate records and escalation of information that does not match an agreed process.',
     work: ['Verify sales information by telephone against approved scripts', 'Maintain customer records and document exceptions', 'Coordinate enquiries, follow-ups and service handovers', 'Support digital operations or first-line technical enquiries where skills fit'],
     planning: 'Agree the purpose of each call, the required checks, record-keeping and escalation rules. You approve scripts, customer statements and system access. Technical support needs a separate capability assessment and a defined limit on what the employee can resolve.',
-    scope: 'Telephone sales verification is an example of work we have operated. It does not imply comprehensive telecommunications sector expertise, regulated advice or responsibility for your sales compliance.',
+    scope: "Our telephone sales verification experience gives us a practical foundation for supporting your customer workflows. We recruit around your requirements, with your team setting scripts, approvals and compliance standards.",
     roles: ['sales-support', 'customer-service', 'operations', 'it-support'], related: ['add-capacity', 'extend-operating-hours']
   },
   {
@@ -59,7 +59,7 @@ export const industries: DiscoveryPage[] = [
     context: 'Consider the work that repeatedly interrupts your fee-earning team. A well-defined administration or project-support role can bring those tasks together, with a local manager setting priorities and reviewing output.',
     work: ['Coordinate calendars, meetings and routine client correspondence', 'Prepare documents and maintain project trackers', 'Support invoice preparation and finance records for review', 'Publish approved marketing content and maintain CRM information'],
     planning: 'Scope the role around your workflows and approval controls. Establish how confidential documents are accessed, who reviews client-facing work and when the employee must seek advice. Finance tasks need clear review and payment-authorisation boundaries.',
-    scope: 'These are potential support roles for professional services operating models. They do not imply existing clients in every profession or that offshore staff provide regulated professional advice.',
+    scope: "Build support around your practice’s workflows, confidentiality requirements and review processes. Your qualified professionals retain responsibility for regulated advice and final sign-off.",
     roles: ['administration', 'accounting-finance', 'digital-marketing', 'operations'], related: ['reduce-hiring-pressure', 'improve-cost-efficiency']
   },
   {
@@ -71,7 +71,7 @@ export const industries: DiscoveryPage[] = [
     context: 'Digital platform management is part of our operational experience. For software development, service desk or QA requirements, a precise technical brief and an assessment led by your own team help establish the right fit.',
     work: ['Develop and test software within your engineering process', 'Triage support requests and maintain diagnostic notes', 'Administer digital platforms and document recurring tasks', 'Coordinate delivery updates, testing checklists and project records'],
     planning: 'Identify the technical lead responsible for onboarding and review. Confirm repository or system permissions, development environments, support escalation and release authority. We screen for relevant experience; your team evaluates technical depth before selection.',
-    scope: 'Digital platform operations are a real experience area. Other technical roles are recruited against your brief and candidate availability; no particular certification, stack coverage or delivery outcome is assumed.',
+    scope: "We recruit against your technical brief, screening for relevant experience and the qualifications your role requires. Your team assesses technical capability and fit before selecting.",
     roles: ['software-development', 'it-support', 'operations'], related: ['access-specialist-skills', 'build-an-offshore-team']
   },
   {
@@ -110,7 +110,7 @@ export const needs: DiscoveryPage[] = [
     context: 'Review why the role has been hard to fill. Separate essential experience from skills you can teach, and identify which responsibilities can be performed remotely. This makes the recruitment brief clearer without lowering the standards the job needs.',
     work: ['Clarify essential skills and the role’s daily responsibilities', 'Consider which work genuinely needs a local presence', 'Agree screening questions and interview criteria', 'Plan a consistent decision process for shortlisted candidates'],
     planning: 'iHire advertises through relevant local channels, reviews applicants and conducts initial interviews. You receive candidate profiles, choose who to meet and make the final selection. This reduces the sourcing and coordination work your business needs to handle directly.',
-    scope: 'A broader search is not a guarantee of an immediate hire or a fixed recruitment timeframe. Availability depends on the role, experience, hours and staffing location. You retain the hiring decision.',
+    scope: "Reach a wider talent pool with sourcing and screening handled by iHire. We discuss recruitment timing around your requirements and candidate availability, while you choose who joins your team.",
     roles: ['administration', 'customer-service', 'accounting-finance'], related: ['professional-services', 'healthcare']
   },
   {
@@ -122,7 +122,7 @@ export const needs: DiscoveryPage[] = [
     context: 'Our after-hours surveillance monitoring experience provides a practical example: an employee monitors agreed systems, documents observations and escalates events to nominated contacts. Similar planning principles apply to customer support or operational follow-up.',
     work: ['Define the coverage window in your business’s local time', 'Confirm seasonal clock changes and shift availability', 'Write escalation steps and name response contacts', 'Plan incoming and outgoing handovers, connectivity and backup'],
     planning: 'Start with the hours that would make a meaningful difference to your customers or operation. Define what can be resolved during the shift and what must wait for the local team. We recruit against the agreed requirements and scope the equipment and support needed.',
-    scope: 'Do not assume round-the-clock coverage from a single hire. Shift arrangements, leave coverage, candidate availability and infrastructure need explicit agreement. Sri Lanka is our established staffing operation.',
+    scope: "Build coverage around the hours your business needs, with staffing levels, shifts, leave cover and infrastructure agreed from the outset.",
     roles: ['monitoring-after-hours', 'customer-service', 'operations'], related: ['security-monitoring', 'telecommunications', 'ecommerce']
   },
   {
@@ -134,7 +134,7 @@ export const needs: DiscoveryPage[] = [
     context: 'A useful specialist brief explains the work, the tools and the judgement required. List the systems the person will use, examples of expected output and the level of independent responsibility. Avoid relying on a job title alone to communicate seniority.',
     work: ['Specify essential tools and practical experience', 'Define who provides technical or professional oversight', 'Use a relevant portfolio discussion or scoped assessment', 'Agree learning expectations, permissions and review standards'],
     planning: 'For an IT support role, describe your environment and escalation boundaries. For a developer, define the stack and delivery process. We screen for relevant experience, while your specialist lead assesses capability and fit before the selection.',
-    scope: 'Sri Lanka is our established primary operation. India and other network locations can be explored where appropriate, with availability and support confirmed for the role. No specialist qualification or outcome is guaranteed by location alone.',
+    scope: "We match the search to the skills you need, using our Sri Lanka operation and wider recruitment networks. Relevant experience, qualifications and practical capability guide candidate selection.",
     roles: ['it-support', 'software-development', 'digital-marketing', 'design-creative'], related: ['technology', 'professional-services']
   },
   {
@@ -158,7 +158,7 @@ export const needs: DiscoveryPage[] = [
     context: 'Start with the outcomes the role must deliver. Compare the proposed staffing cost alongside recruitment effort, equipment, connectivity, onboarding and the management time your business will provide. A lower headline cost is only useful when the person can do the work you need.',
     work: ['Define responsibilities and the required experience level', 'Compare agreed monthly inclusions and separate setup charges', 'Allow for training, management and review time', 'Consider working hours, location and infrastructure requirements'],
     planning: 'iHire scopes your brief, recruits and validates the candidate market, then prepares an indicative quote for your review before you decide whether to proceed. Confirm which employment and support items are included and how equipment or additional infrastructure will be charged. Review the proposal against a consistent role scope so the comparison is meaningful.',
-    scope: 'There are no published savings guarantees or salary bands here. Costs vary by role, experience, hours and location. The aim is a sustainable staffing arrangement that supports quality and useful capacity.',
+    scope: "Explore our starting monthly prices, then receive a quote tailored to your role, experience level, working hours and setup. Compare the full arrangement to understand the value for your business.",
     roles: ['accounting-finance', 'administration', 'operations'], related: ['professional-services', 'ecommerce']
   }
 ];

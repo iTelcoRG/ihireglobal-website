@@ -1,10 +1,10 @@
-# iHire Global — Build 3
+# iHire Global — Build 4 review
 
 A static marketing website for managed offshore staffing, serving New Zealand and Australian businesses. Sri Lanka is the established staffing operation; the Philippines, India and Fiji are role-dependent sourcing networks.
 
 ## Stack and development
 
-Astro, TypeScript, semantic HTML and responsive CSS. No UI framework, backend, database or third-party runtime scripts. Use Node 22.12+ (built locally with Node 24) and npm.
+Astro, TypeScript, semantic HTML and responsive CSS. No UI framework or database; the enquiry form uses a small PHP email endpoint. No third-party browser runtime scripts. Use Node 22.12+ (built locally with Node 24) and npm.
 
 ```sh
 npm install
@@ -17,7 +17,7 @@ npm test
 
 On Windows PowerShell with script execution restricted, use `npm.cmd` instead of `npm`. The development and preview servers default to `http://127.0.0.1:4321`. Production output is in `dist/`. Nothing is deployed by these commands. Astro configuration follows the [official setup documentation](https://docs.astro.build/en/install-and-setup/).
 
-Browser checks use locally installed Google Chrome through Playwright. Tests cover built routes, metadata, internal links, fragments, responsive overflow, menu keyboard behaviour, form validation/download, runtime errors and automated WCAG checks. Build before running tests. Build 3 screenshots are saved to `artifacts/` with a `-build3` suffix at desktop, tablet and mobile widths, plus the requested key pages and form close-ups. Earlier build screenshots are preserved. Automated checks do not establish full WCAG conformance.
+Browser checks use locally installed Google Chrome through Playwright. Tests cover built routes, metadata, internal links, fragments, responsive overflow, menu keyboard behaviour, guided form navigation, validation/review/email feedback, runtime errors and automated WCAG checks. Build before running tests. Browser review is primary; tests no longer generate a large screenshot set on every run. Earlier screenshots remain in `artifacts/`. Automated checks do not establish full WCAG conformance.
 
 ## Local browser preview
 
@@ -40,13 +40,21 @@ The repository remote is `https://github.com/iTelcoRG/ihireglobal-website`, with
 - `src/layouts/`: document metadata/schema and future article layout.
 - `src/data/`: editorial role, location, process and FAQ data, plus industry/business-need entries in `discovery.ts`.
 - `src/styles/global.css`: shared baseline styles; `src/styles/brand.css`: approved yellow brand design; `src/styles/conversion.css`: scoped quote, form and use-case additions.
-- `src/data/business.ts`: approved contact configuration, CTA labels and enquiry option values. Contact values intentionally remain null pending approval.
-- `src/lib/enquiry.ts`: typed Client/Contact/Staffing Requirement draft and local text-file formatter. No transport or integration layer exists.
+- `src/data/business.ts`: approved contact configuration, CTA labels and enquiry option values. The enquiry email is approved; optional telephone, address and availability remain unset.
+- `src/lib/enquiry.ts`: typed Client/Contact/Staffing Requirement draft and local text-file formatter. Email transport is implemented by public/api/enquiry.php on cPanel.
 - `src/content/resources/`: article authoring notes.
-- `public/`: robots.txt and placeholder favicon.
+- `public/`: robots.txt, approved favicons, local imagery and the PHP endpoint.
 - `tests/`: browser acceptance checks; `artifacts/`: review screenshots.
 
 ## Content changes
+
+Role cards use local AI-generated workplace images in `public/images/roles/`, mapped by slug in `src/data/roleImages.ts`. Generation prompts are in `ROLE-IMAGE-PROMPTS.md`. These illustrate roles with fictional people rather than portraying actual iHire staff. Keep their descriptive alt text, lazy loading and role-specific crop positions when changing assets.
+
+Build 4 commercial content lives in `src/data/conversion.ts`: three example staffing scenarios with deliberately null pricing, the shared four-step process, factual operational proof and empty approved customer proof collections. Unpriced examples display “Quoted for your requirements”. Add monthly guidance only after approval, including currency, hours, inclusions and assumptions. `CustomerProof.astro` can render approved logos, attributed quotes and outcomes; no empty section renders publicly.
+
+`CaseVisual.astro` contains four lightweight CSS/HTML representative workflows. Replace these slots with approved contextual photography or artwork when available; never present them as customer photos or real application screenshots. `src/styles/polish.css` contains the Build 4 refinements.
+
+The employer brief uses four steps: About you; What do you need?; Skills and setup; Review. Entries stay in the current form while navigating; reloading does not restore them. Each step validates before continuing, and the review shows the complete staffing requirement. The final action is **Send Enquiry**, which emails enquiries@ihireglobal.com through the cPanel PHP handler. Connectivity details map to `requirement.connectivityRequirements` in the typed draft.
 
 **New role:** add a unique entry to `src/data/roles.ts` with slug, title, short introduction, full introduction, responsibilities (`tasks`), use case, skills and screening. A new route and directory card are generated automatically. Select featured homepage roles in `src/pages/index.astro`.
 
@@ -56,7 +64,7 @@ The repository remote is `https://github.com/iTelcoRG/ihireglobal-website`, with
 
 **New article:** create `src/pages/resources/your-slug.md` with frontmatter `layout: ../../layouts/ArticleLayout.astro`, `title`, `description`, and an ISO date string in `published`. Add the reviewed body and link to it from the appropriate topic in `src/components/LearnHub.astro`. The sitemap picks up static routes. No placeholder article URLs are published.
 
-**Branding:** update CSS variables at the start of `src/styles/brand.css`. The palette is golden yellow (`#ffc62f`), charcoal (`#20282b`), pale yellow and warm white. Shared baseline variables remain in `global.css`. The previous live iHire site was reviewed as a colour reference, not a layout reference. The wordmark is a text placeholder, not a new logo. Inline schematic artwork uses no external images or fonts. Replace the favicon and add approved social imagery before launch.
+**Branding:** update CSS variables at the start of `src/styles/brand.css`. The palette is golden yellow (`#ffc62f`), charcoal (`#20282b`), pale yellow and warm white. Shared baseline variables remain in `global.css`. The previous live iHire site was reviewed as a colour reference, not a layout reference. The header uses the approved SVG at `public/brand/ihire-logo.svg`; the footer uses `public/brand/ihire-logo-white.svg` directly on charcoal. Both supplied assets are unchanged. Inline schematic artwork uses no external images or fonts. Approved favicons and a branded 1200 × 630 social-sharing image are included.
 
 ## SEO
 
@@ -66,7 +74,7 @@ Every page supplies its own title and description. The shared layout emits canon
 
 Pricing is quote-led. Scope the role, recruit and validate the candidate market, establish employment/infrastructure requirements, and provide an indicative quote before the customer commits. Do not publish salary bands or fixed packages. Use **Get an Indicative Quote** for pricing CTAs and **Find Talent** for general employer CTAs.
 
-The employer form downloads `ihire-staffing-brief.txt` locally. It captures name, company, work email, phone, country, job title, headcount, responsibilities, skills, experience, working hours, start timeframe, talent-location preference, equipment selections and notes. Required fields use native browser validation; required text also rejects whitespace-only values. Other answers can remain open for discussion. JavaScript must load before the download button is enabled; no-JavaScript users retain navigation and see an explanation.
+The employer form emails the staffing requirement to enquiries@ihireglobal.com. It captures name, company, work email, phone, country, job title, headcount, responsibilities, skills, experience, working hours, start timeframe, talent-location preference, equipment selections and notes. Required fields use native browser validation; required text also rejects whitespace-only values. Other answers can remain open for discussion. JavaScript must load before submission is enabled; no-JavaScript users retain navigation and can use the published email address.
 
 Stable field names map into `StaffingEnquiry` in `src/lib/enquiry.ts`:
 
@@ -79,20 +87,53 @@ Stable field names map into `StaffingEnquiry` in `src/lib/enquiry.ts`:
 | Work arrangement | `workingHours`, `startTimeframe`, `preferredLocation` |
 | Infrastructure and notes | `equipmentRequirements` array, `notes` |
 
-The draft has `schemaVersion: 1` and `source: public-website`. Option values are stable identifiers; the downloaded text renders readable labels. A future approved email/API/CRM integration must add server-side validation, delivery/error handling and approved privacy wording. Do not treat browser validation as a security boundary. The current form makes no submission requests, stores no data in browser storage and never claims that a quote has been requested.
+The draft has schemaVersion 1 and source public-website. Option values are stable identifiers. The form sends to the PHP endpoint, which validates fields before delivery; answers are not saved in browser storage. Success and failure are reported honestly, with duplicate-send protection for retries.
 
 `/use-cases/` contains four factual, anonymised operating examples. Do not turn these into testimonials, add customer names, or invent outcomes.
 
 ## Build boundaries / launch work
 
-- Enquiry form is deliberately frontend-only. Browser validation runs before a plain-text brief downloads. No personal data is submitted, persisted to browser storage or sent to analytics. With JavaScript disabled, download is disabled and the limitation is explained.
+- Enquiry form submits to the fixed cPanel email handler. Browser and server validation run before delivery. Details are emailed, not persisted in browser storage or sent to analytics. No automatic customer confirmation email is enabled.
 - Verify email, telephone, business/legal details and contact availability. None have been invented.
-- Add an approved enquiry endpoint, consent/privacy wording and delivery/error handling before accepting enquiries. Privacy/legal copy requires business review.
-- Pricing is role-specific/TBC. Confirm inclusions and setup charges. The estimator is only a labelled future placeholder.
-- Detailed Learn guides and job listings are clearly marked as pending; there are no fabricated vacancies, testimonials, metrics or salaries.
+- Enquiry endpoint and privacy links are implemented. Remaining privacy business review is recorded in LAUNCH.md.
+- Pricing is quote-led; no fixed prices or unfinished estimator are published.
+- Learn links to existing material. Jobs is informational; the owner deferred its backend and no applications are collected.
 - Confirm final branding and replace schematic visuals with genuine photography only if desired.
-- Hosting, DNS and deployment remain unconfigured. The approved Build 3 baseline is tracked on `main` in the GitHub repository above.
+- Itronics cPanel is selected and only the enquiry endpoint is deployed. The full site remains local. LAUNCH.md covers HTTPS, redirects, deployment and rollback.
 
 ## Future portal
 
 Keep the public site static and independent of a future `portal.ihireglobal.com` application. A login URL can later be added to Header’s secondary actions. No inactive login link is shown and no portal is built. Keep the portal branded as iHire Global; internal platform branding must not appear on the public website.
+
+Brand assets updated 26 September 2026: supplied black logo with blue dot on light surfaces, white logo on the footer (exported background rectangles removed for transparency). `favicon-black.png` is the default/light-browser icon and `favicon-white.png` is selected for dark browser themes.
+
+
+## Enquiry delivery — verified 7 November 2026
+
+- Recipient: enquiries@ihireglobal.com, with two cPanel forwarders to ashna@ihireglobal.com and rakesh@ihireglobal.com. Rakesh also retains his existing forwarding to rakesh@itelco.nz.
+- PHP endpoint: public/api/enquiry.php, installed at /home/ihireglo/public_html/api/enquiry.php alongside api/.htaccess. No new mailbox, passwords or third-party mail service are required.
+- The handler uses cPanel's local mail transport with a fixed From/envelope sender and recipient. Only the validated enquirer's address is placed in Reply-To. It sends all staffing fields in plain text with a reference number.
+- Protections: signed two-hour form token, same-origin checks (no CORS), bounded payload, server-side field and option validation, honeypot, five attempts/IP/hour and 50 total/hour, duplicate-send protection. Only HMAC-hashed IPs, timestamps, references and token hashes are kept in private /home/ihireglo/.ihire-enquiry/state.json. No enquiry body is stored there. Mail copies and normal hosting mail logs remain on the mail system.
+- A successful API response means the mail server accepted the message, not that the recipient read it. Failure preserves the form answers; retrying the same token avoids duplicate mail after a lost response.
+- Real browser test reference IH-20261107-E40C5224 / mail ID 1xPYJC-00000007zs5-2usu: cPanel recorded successful delivery to both iHire mailboxes and acceptance by the itelco.nz mail server. Rakesh confirmed both people received it.
+- Local connected preview (PowerShell): set $env:IHIRE_ENQUIRY_PREVIEW='1', then npm.cmd run dev -- --port 4323. This proxies only /api/enquiry.php over verified HTTPS to mail.ihireglobal.com. Without the flag, a static preview cannot execute PHP; automated browser tests mock the endpoint and never send real emails.
+- The public www/apex domain still points to Wix. The new website has NOT been published. At website launch, deploy the full dist output to the cPanel document root, preserve the private state directory, and ensure the certificate covers the main website domain. The currently installed cPanel certificate covers mail.ihireglobal.com only.
+- Checks: npm.cmd run check; npm.cmd run build; npm.cmd test; node tests/enquiry-server.mjs. The PHP integration test uses a local fake SMTP server on Windows and sends no external mail.
+- Remaining launch work: privacy business review, main-domain SSL/hosting cutover and public-domain checks. Customer autoresponder is optional. No promised response time has been invented.
+
+
+## Privacy policy draft — 7 November 2026
+
+- Added /privacy/ and footer/form links. The form link opens a new tab to preserve unsent answers; no consent or marketing checkbox was introduced.
+- Scope: this rebuilt website and employer enquiries. It does not replace a candidate, employee or service-delivery privacy notice.
+- Confirmed by owner: iTelco Limited in New Zealand enters into customer contracts under iHire Global branding and owns the Sri Lankan iHire Global company, which employs/pays the Sri Lankan team. The customer website policy therefore names iTelco Limited and explains relevant information sharing with Sri Lanka. Confirm the Sri Lankan company’s exact registered name when preparing a separate candidate/employee notice.
+- Confirm practical retention/deletion arrangements and provider processing locations before publication. Policy names iTelco Limited operating under the iHire Global brand and describes known email handling, without an invented retention period or blanket legal-compliance guarantee.
+- Reference guidance: https://www.privacy.org.nz/responsibilities/collecting/ and https://www.oaic.gov.au/privacy/australian-privacy-principles/read-the-australian-privacy-principles
+- This policy is in the local preview only; no production site deployment or DNS change.
+
+
+## Launch preparation — 7 November 2026
+
+See LAUNCH.md for the current checklist, legacy Wix URL map, unresolved business facts and rollback procedure. public/.htaccess is prepared but not deployed or host-tested. Run node scripts/verify-release.mjs after building. A local release ZIP and checksum are generated in artifacts/releases; these contain deployment files only. Social-sharing metadata uses public/images/social-share.jpg. No DNS changes, deployment, commits or pushes were made during preparation.
+
+Pricing update, 7 November 2026: owner confirmed the existing website’s starting prices remain current and are NZD: Entry Level from NZ$800/month + GST, Mid Level from NZ$1,500/month + GST, Senior Level from NZ$2,500/month + GST. These replace the unpriced scenarios; hours and inclusions remain quote-specific.

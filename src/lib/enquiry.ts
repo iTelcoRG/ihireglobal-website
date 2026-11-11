@@ -1,6 +1,6 @@
 import { equipmentOptions, startTimeframes, talentPreferences } from '../data/business';
 
-/** Browser-only draft contract. No transport, persistence or integration is implemented. */
+/** Staffing enquiry draft shared by the browser review and email form. */
 export interface StaffingEnquiry {
   schemaVersion: 1;
   source: 'public-website';
@@ -16,6 +16,7 @@ export interface StaffingEnquiry {
     startTimeframe: string;
     preferredLocation: string;
     equipmentRequirements: string[];
+    connectivityRequirements: string;
     notes: string;
   };
 }
@@ -33,12 +34,13 @@ export function createEnquiryDraft(data: FormData): StaffingEnquiry {
       requiredExperience: value('required_experience'), workingHours: value('working_hours'),
       startTimeframe: value('start_timeframe'), preferredLocation: value('preferred_location'),
       equipmentRequirements: data.getAll('equipment_requirements').map(String),
+      connectivityRequirements: value('connectivity_requirements'),
       notes: value('notes'),
     },
   };
 }
 
-export function formatEnquiryBrief(draft: StaffingEnquiry): string {
+export function enquiryBriefRows(draft: StaffingEnquiry): [string, string | number][] {
   const label = (options: readonly (readonly [string, string])[], value: string) => options.find(([key]) => key === value)?.[1] ?? value;
   const r = draft.requirement;
   const sections: [string, string | number][] = [
@@ -50,8 +52,13 @@ export function formatEnquiryBrief(draft: StaffingEnquiry): string {
     ['Desired start timeframe', label(startTimeframes, r.startTimeframe)],
     ['Preferred talent location', label(talentPreferences, r.preferredLocation)],
     ['Equipment / infrastructure', r.equipmentRequirements.map(value => label(equipmentOptions, value)).join('; ')],
+    ['Connectivity requirements', r.connectivityRequirements],
     ['Additional information', r.notes],
   ];
+  return sections;
+}
+
+export function formatEnquiryBrief(draft: StaffingEnquiry): string {
   return 'iHire Global — staffing requirement draft\nNot submitted. This is a local brief, not a quote or a commitment.\n\n'
-    + sections.map(([name, value]) => `${name}: ${value || 'Not specified'}`).join('\n\n');
+    + enquiryBriefRows(draft).map(([name, value]) => `${name}: ${value || 'Not specified'}`).join('\n\n');
 }

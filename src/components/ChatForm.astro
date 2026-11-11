@@ -1,0 +1,69 @@
+---
+import { business } from '../data/business';
+---
+<div class="wrap form-layout">
+  <div><h2>Let’s have a chat.</h2><p>Not sure where to start? Tell us a little about your business or ask us a question. No job description needed.</p><p>Our team will get back to you using the details you provide.</p></div>
+  <form id="chat-form" data-endpoint={business.enquiry.endpoint} aria-describedby="chat-privacy">
+    <div class="form-grid">
+      <label for="chat-name">Name <span>(required)</span><input id="chat-name" name="contact_name" autocomplete="name" maxlength="120" required/></label>
+      <label for="chat-email">Email <span>(required)</span><input id="chat-email" name="work_email" type="email" autocomplete="email" maxlength="200" required/></label>
+      <label for="chat-company">Company <span>(optional)</span><input id="chat-company" name="company_name" autocomplete="organization" maxlength="160"/></label>
+      <label for="chat-phone">Phone <span>(optional)</span><input id="chat-phone" name="phone" type="tel" autocomplete="tel" maxlength="40"/></label>
+      <label class="full" for="chat-message">How can we help? <span>(required)</span><textarea id="chat-message" name="message" rows="5" maxlength="5000" required placeholder="A question, an idea, or a good time to call you…"></textarea></label>
+    </div>
+    <div class="chat-trap" aria-hidden="true"><label>Leave this blank<input name="website" tabindex="-1" autocomplete="off"/></label></div>
+    <p class="fine-print" id="chat-privacy">iHire Global uses these details to respond to your enquiry. Read our <a href="/privacy/" target="_blank" rel="noopener">privacy policy (opens in a new tab)</a>. Please do not include sensitive personal information.</p>
+    <button class="button" type="submit" id="chat-send" disabled>Send message <span aria-hidden="true">→</span></button>
+    <p id="chat-status" role="status" aria-live="polite"></p>
+    <p id="chat-script-note">Enable JavaScript to send this form, or email <a href="mailto:enquiries@ihireglobal.com">enquiries@ihireglobal.com</a>.</p>
+  </form>
+</div>
+<script>
+const form=document.querySelector<HTMLFormElement>('#chat-form');
+if(form){
+ const send=form.querySelector<HTMLButtonElement>('#chat-send')!;
+ const status=form.querySelector<HTMLElement>('#chat-status')!;
+ let token='',busy=false,sent=false;
+ send.disabled=false;
+ form.querySelector<HTMLElement>('#chat-script-note')!.hidden=true;
+ form.noValidate=true;
+ form.addEventListener('input',event=>{
+  const field=event.target;
+  if(field instanceof HTMLInputElement || field instanceof HTMLTextAreaElement){field.setCustomValidity('');field.removeAttribute('aria-invalid');}
+ });
+ form.addEventListener('submit',async event=>{
+  event.preventDefault();
+  if(busy||sent)return;
+  const fields=Array.from(form.querySelectorAll<HTMLInputElement|HTMLTextAreaElement>('input,textarea'));
+  fields.forEach(field=>field.setCustomValidity(field.required&&!field.value.trim()?'Please complete this field.':''));
+  const invalid=fields.find(field=>!field.checkValidity());
+  if(invalid){invalid.setAttribute('aria-invalid','true');invalid.reportValidity();return;}
+  busy=true;send.disabled=true;send.textContent='Sending…';form.setAttribute('aria-busy','true');status.textContent='Sending your message…';
+  try{
+   if(!token){
+    const response=await fetch(form.dataset.endpoint!,{headers:{Accept:'application/json'},cache:'no-store',signal:AbortSignal.timeout(15000)});
+    if(!response.ok)throw new Error('The enquiry service is unavailable. Please try again or email enquiries@ihireglobal.com.');
+    const result=await response.json();
+    if(typeof result.token!=='string')throw new Error('The enquiry service is unavailable. Please email enquiries@ihireglobal.com.');
+    token=result.token;
+   }
+   const data=Object.fromEntries(new FormData(form));
+   const response=await fetch(form.dataset.endpoint!,{method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json'},body:JSON.stringify({...data,enquiry_type:'chat',token}),signal:AbortSignal.timeout(30000)});
+   const result=await response.json();
+   if(!response.ok||result.ok!==true){
+    if(response.status===403)token='';
+    throw new Error(typeof result.message==='string'?result.message:'We could not send your message. Please retry or email enquiries@ihireglobal.com.');
+   }
+   sent=true;send.textContent='Message sent';status.textContent='Thank you. Your message has been sent to iHire Global. Reference: '+result.reference+'. Our team will be in touch.';
+  }catch(error){
+   status.textContent=(error instanceof Error&&!['AbortError','TimeoutError','SyntaxError'].includes(error.name)?error.message:'We could not confirm delivery. Please retry; the same message will not be sent twice.')+' Your answers have been kept on this page.';
+   send.textContent='Send message';
+  }finally{busy=false;send.disabled=sent;form.removeAttribute('aria-busy');status.tabIndex=-1;status.focus();}
+ });
+}
+</script>
+<style>
+.chat-trap {position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
+#chat-privacy {margin-top:24px}
+#chat-status {margin-top:20px}
+</style>

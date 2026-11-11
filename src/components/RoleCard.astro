@@ -1,6 +1,11 @@
 ﻿---
 import type {roles} from '../data/roles';
+import { roleImages } from '../data/roleImages';
 interface Props {role: (typeof roles)[number]; index?:number;}
 const {role}=Astro.props;
+const photo = roleImages[role.slug];
 ---
-<a class="role-card" href={`/roles/${role.slug}/`}><h3>{role.title}</h3><p>{role.short}</p><span class="role-arrow" aria-hidden="true">↗</span></a>
+<a class="role-card" href={`/roles/${role.slug}/`} aria-label={`${role.title}: ${role.short}`}>
+  {photo && <div class="role-card-image"><img src={`/images/roles/${role.slug}.webp`} alt={photo.alt} width="800" height="600" loading="lazy" decoding="async" style={`object-position: ${photo.position}`}/></div>}
+  <div class="role-card-copy"><h3>{role.title}</h3><p>{role.short}</p></div>
+</a>

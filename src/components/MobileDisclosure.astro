@@ -1,0 +1,26 @@
+---
+interface Props { label: string; }
+const { label } = Astro.props;
+---
+<details class="mobile-disclosure" open>
+  <summary>{label}<span aria-hidden="true">+</span></summary>
+  <div class="disclosure-content"><slot/></div>
+</details>
+<style>
+  summary {display:none}
+  @media(max-width:600px){
+    summary {display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 20px;border:1px solid var(--border);border-radius:10px;background:var(--background);color:var(--primary);font-size:1rem;font-weight:700;cursor:pointer;list-style:none}
+    summary::-webkit-details-marker {display:none}
+    summary span {font-size:1.5rem;line-height:1}
+    details[open] summary span {transform:rotate(45deg)}
+    summary:focus-visible {outline:3px solid #846100;outline-offset:4px}
+    .disclosure-content {padding-top:20px}
+  }
+</style>
+<script>
+  const mobile = window.matchMedia('(max-width:600px)');
+  const disclosures = document.querySelectorAll<HTMLDetailsElement>('.mobile-disclosure');
+  const sync = () => disclosures.forEach(disclosure => { disclosure.open = !mobile.matches; });
+  sync();
+  mobile.addEventListener('change', sync);
+</script>
